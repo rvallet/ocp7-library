@@ -1,4 +1,4 @@
-package com.example.mslibrary;
+package com.library.mslibrary;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

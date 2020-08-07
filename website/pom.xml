@@ -112,10 +112,10 @@
 		</dependency>-->
 		
 		<!-- Starter Feign -->
-<!--		<dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>-->
+		</dependency>
 		
 		<!-- Starter Sleuth & Zipkin -->
 <!--		<dependency>
