@@ -30,10 +30,10 @@ public class MsLibraryApplication implements CommandLineRunner {
 		boolean isBddInit = false;
 
 		/* Initialize BDD with sample test users if empty (on first launch only) */
-		LOGGER.info("Recherche de l'existance de l'utilisateur 'email@user1.fr' en BDD");
+		LOGGER.info("Recherche de l'existance des utilisateurs en BDD");
 
 		if (CollectionUtils.isEmpty(userRepository.findAll())) {
-			LOGGER.info("Initialisation des données de la table 'user'");
+			LOGGER.info("Création d'un jeu de données utilisateur de test (table 'user')");
 			isBddInit=true;
 
 			List<User> userList = Arrays.asList(
@@ -55,6 +55,8 @@ public class MsLibraryApplication implements CommandLineRunner {
 
 			userRepository.saveAll(userList);
 			LOGGER.info("Ajout de {} Utilisateurs", userList.size());
+		} else {
+			LOGGER.debug("Des utilisateurs existent déjà en BDD");
 		}
 	}
 

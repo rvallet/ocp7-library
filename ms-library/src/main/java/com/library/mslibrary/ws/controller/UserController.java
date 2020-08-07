@@ -19,7 +19,7 @@ public class UserController {
     @GetMapping(value= ApiRegistration.REST_USERS)
     public List<User> getUsers() throws NoSuchResultException {
         List<User> userList = userService.findAll();
-        if (userList.isEmpty()) throw new NoSuchResultException();
+        if (userList.isEmpty()) throw new NoSuchResultException("Aucun Utilisateur");
         return userList;
     }
 }
