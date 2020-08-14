@@ -19,6 +19,44 @@
 
             <h1>Page d'accueil - Bienvenue sur MyLibrary v1.0</h1>
 
+            <div class="col-md-12" th:if="${userList!=null and !userList.isEmpty()}">
+                <br />
+                <h3>Tous les utilisateurs</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">e-Mail</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prénom</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Accès</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user:${userList}">
+                            <th scope="row"><span th:text="${user.id}">id</span></th>
+                            <td><span th:text="${user.email}">e-Mail</span></td>
+                            <td><span th:text="${user.lastName}">Nom</span></td>
+                            <td><span th:text="${user.firstName}">Prénom</span></td>
+                            <td><span th:text="${#dates.format(user.creationDate, 'dd/MM/yyyy')}">Date</span></td>
+                            <td>
+                                <div class="text-center">
+                                    <span th:text="${user.role}">Accès</span>
+                                    <form th:action="@{/admin/edit-user}" method="get">
+                                        <input type="hidden" name="id" th:value="${user.id}">
+                                        <button class="text-center" type="submit">Modifier</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
 
         </div>
     </section>
