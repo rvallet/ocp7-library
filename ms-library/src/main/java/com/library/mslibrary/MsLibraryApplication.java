@@ -8,12 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
+@EnableConfigurationProperties
+@EnableDiscoveryClient
 public class MsLibraryApplication implements CommandLineRunner {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MsLibraryApplication.class);

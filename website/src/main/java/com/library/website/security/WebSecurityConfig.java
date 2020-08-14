@@ -1,5 +1,7 @@
 package com.library.website.security;
 
+import com.library.website.controller.DeniedAccessController;
+import com.library.website.proxies.MicroServiceLibraryProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    MicroServiceLibraryProxy msLibraryProxy;
+
+    @Autowired
+    private DeniedAccessController deniedAccessController;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -44,9 +52,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
-                .permitAll();
-/*                .and()
-                .exceptionHandling().accessDeniedHandler(deniedAccessController);*/
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedHandler(deniedAccessController);
 
     }
 
