@@ -73,12 +73,18 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Open Feign -->
 		<dependency>
 			<groupId>io.github.openfeign</groupId>
 			<artifactId>feign-core</artifactId>
 			<version>9.5.1</version>
 			<scope>compile</scope>
 		</dependency>
+		<!-- Starter Spring Cloud-config -->
+		<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>

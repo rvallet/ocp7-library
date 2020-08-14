@@ -1,5 +1,5 @@
 package com.library.website.service;
 
-public class UserService {
+public interface UserService {
     //TODO: delete this class
 }
