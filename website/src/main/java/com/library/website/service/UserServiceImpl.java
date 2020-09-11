@@ -1,8 +1,7 @@
-package com.library.mslibrary.service.impl;
+package com.library.website.service;
 
-import com.library.mslibrary.entities.User;
-import com.library.mslibrary.repository.UserRepository;
-import com.library.mslibrary.service.UserService;
+import com.library.website.beans.UserBean;
+import com.library.website.proxies.MicroServiceLibraryProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,27 +19,12 @@ public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
-    UserRepository userRepository;
+    MicroServiceLibraryProxy msLibraryProxy;
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public User findUserById(Long id) {
-        return userRepository.findUserById(id);
-    }
-
-    @Override
-    public User findUserByEmail(String email) {
-        return userRepository.findUserByEmail(email);
-    }
-
-/*    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         LOGGER.info("loadUserByUsername START with email = {}", email);
-        User user = userRepository.findUserByEmail(email);
+        UserBean user = msLibraryProxy.getUserByEmail(email);
 
         if (user == null){
             LOGGER.warn("loadUserByUsername FAILED");
@@ -59,7 +42,6 @@ public class UserServiceImpl implements UserService {
 
     private Collection<? extends GrantedAuthority> convertRoleEnumToAuthorities(String role){
         return AuthorityUtils.createAuthorityList(role);
-    }*/
-
+    }
 
 }
