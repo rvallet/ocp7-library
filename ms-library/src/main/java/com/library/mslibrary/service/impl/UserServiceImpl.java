@@ -38,28 +38,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUserByEmail(email);
     }
 
-/*    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        LOGGER.info("loadUserByUsername START with email = {}", email);
-        User user = userRepository.findUserByEmail(email);
-
-        if (user == null){
-            LOGGER.warn("loadUserByUsername FAILED");
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-
-        LOGGER.info("Found - loadUserByUsername with {} {} {}",user.getEmail(),user.getPassword(),user.getRole());
-        org.springframework.security.core.userdetails.User uControl = new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                convertRoleEnumToAuthorities(user.getRole()));
-        LOGGER.info("Found - loadUserByUsername with {}",uControl.toString());
-        return uControl;
+    @Override
+    public User saveUser(User user) {
+        userRepository.save(user);
+        return user;
     }
-
-    private Collection<? extends GrantedAuthority> convertRoleEnumToAuthorities(String role){
-        return AuthorityUtils.createAuthorityList(role);
-    }*/
-
 
 }

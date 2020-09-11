@@ -2,11 +2,11 @@ package com.library.website.proxies;
 
 import com.library.website.beans.UserBean;
 import com.library.website.service.UserService;
+import feign.Body;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +21,10 @@ public interface MicroServiceLibraryProxy {
     UserDetails getUserDetails() ;
 
     @GetMapping(value = "/findUserByEmail/{email}")
-    UserBean getUserByEmail(@PathVariable String email) ;
+    UserBean getUserByEmail(@PathVariable String email);
+
+    @PostMapping(value = "/saveUser")
+    UserBean saveUser(@RequestBody UserBean user);
+
 
 }
