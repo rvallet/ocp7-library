@@ -2,6 +2,7 @@ package com.library.mslibrary;
 
 import com.library.mslibrary.entities.User;
 import com.library.mslibrary.repository.UserRepository;
+import com.library.mslibrary.security.WebSecurityConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class MsLibraryApplication implements CommandLineRunner {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private WebSecurityConfig webSecurityConfig;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MsLibraryApplication.class, args);
 	}
@@ -45,14 +49,14 @@ public class MsLibraryApplication implements CommandLineRunner {
 							"email@user1.fr",
 							"user1_lastName",
 							"user1_firstName",
-							"passwordUser1",
+							webSecurityConfig.passwordEncoder().encode("passwordUser1"),
 							"user"
 					),
 					new User(
 							"email@user2.fr",
 							"user2_lastName",
 							"user2_firstName",
-							"passwordUser2",
+							webSecurityConfig.passwordEncoder().encode("passwordUser2"),
 							"user"
 					)
 			);

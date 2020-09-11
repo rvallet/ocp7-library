@@ -7,4 +7,6 @@ public interface ApiRegistration {
     String REST_PREFIX = "/ms-library";
 
     String REST_USERS = "/users";
+
+    String REST_GET_USER_BY_EMAIL = "/findUserByEmail";
 }
