@@ -8,10 +8,10 @@ import com.library.mslibrary.ws.exception.NoSuchResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -31,6 +31,19 @@ public class UserController {
         LOGGER.info("PageSizeLimit = {}", applicationPropertiesConfig.getPageSizeLimit());
         return userList;
     }
+
+    @GetMapping(value= ApiRegistration.REST_GET_USER_BY_EMAIL + "/{email}")
+    public Optional<User> getUserByEmail(@PathVariable String email) throws NoSuchResultException {
+        Optional<User> user = Optional.ofNullable(userService.findUserByEmail(email));
+        return user;
+    }
+
+    @PostMapping(value = ApiRegistration.REST_SAVE_USER)
+    public void saveUser(@RequestBody User user) {
+        if (user==null) throw new NoSuchResultException("Demande d'enregistrement utilisateur : ECHEC");
+        userService.saveUser(user);
+    }
+
 
 
 }

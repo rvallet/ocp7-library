@@ -6,13 +6,9 @@ import com.library.mslibrary.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+
 import java.util.List;
 
 @Service
@@ -29,37 +25,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
+    public User findUserById(Long id) {
         return userRepository.findUserById(id);
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        LOGGER.info("loadUserByUsername START with email = {}", email);
-        User user = userRepository.findUserByEmail(email);
-
-        if (user == null){
-            LOGGER.warn("loadUserByUsername FAILED");
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-
-        LOGGER.info("Found - loadUserByUsername with {} {} {}",user.getEmail(),user.getPassword(),user.getRole());
-        org.springframework.security.core.userdetails.User uControl = new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                convertRoleEnumToAuthorities(user.getRole()));
-        LOGGER.info("Found - loadUserByUsername with {}",uControl.toString());
-        return uControl;
+    public User saveUser(User user) {
+        userRepository.save(user);
+        return user;
     }
 
-    private Collection<? extends GrantedAuthority> convertRoleEnumToAuthorities(String role){
-        return AuthorityUtils.createAuthorityList(role);
+    @Override
+    public List<User> saveAll(List<User> userList) {
+        return userRepository.saveAll(userList);
     }
-
 
 }
