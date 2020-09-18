@@ -2,6 +2,8 @@ package com.library.website.controller;
 
 import com.library.website.beans.UserBean;
 import com.library.website.proxies.MicroServiceLibraryProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
     MicroServiceLibraryProxy msLibraryProxy;

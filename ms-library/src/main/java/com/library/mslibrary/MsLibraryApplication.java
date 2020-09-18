@@ -46,8 +46,6 @@ public class MsLibraryApplication implements CommandLineRunner {
 	@Autowired
 	private BookLoanService bookLoanService;
 
-
-
 	public static void main(String[] args) {
 		SpringApplication.run(MsLibraryApplication.class, args);
 	}
