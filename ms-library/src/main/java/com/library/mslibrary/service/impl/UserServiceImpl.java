@@ -6,13 +6,9 @@ import com.library.mslibrary.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+
 import java.util.List;
 
 @Service
@@ -42,6 +38,11 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user) {
         userRepository.save(user);
         return user;
+    }
+
+    @Override
+    public List<User> saveAll(List<User> userList) {
+        return userRepository.saveAll(userList);
     }
 
 }

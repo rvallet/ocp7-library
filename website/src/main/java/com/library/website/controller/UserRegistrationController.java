@@ -43,7 +43,6 @@ public class UserRegistrationController {
 
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto, BindingResult result){
-        LOGGER.info("AccountCreation for {}", userDto.getEmail());
         UserBean isEmailExist = msLibraryProxy.getUserByEmail(userDto.getEmail());
 
         if (isEmailExist != null){
@@ -52,7 +51,7 @@ public class UserRegistrationController {
         }
 
         if (result.hasErrors()){
-            LOGGER.debug("form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
+            LOGGER.debug("Account-creation form has {} error(s) - First {}", result.getErrorCount(), result.getFieldError());
             return "creation-compte";
         }
 
@@ -66,6 +65,7 @@ public class UserRegistrationController {
         user.setCreationDate(new Date());
 
         msLibraryProxy.saveUser(user);
+        LOGGER.info("AccountCreation for {}", userDto.getEmail());
         return "redirect:/creation-compte?success";
     }
 }

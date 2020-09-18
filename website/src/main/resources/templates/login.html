@@ -15,7 +15,12 @@
 <th:block th:insert="base :: header">...</th:block>
 <main layout:fragment="main" role="main" th:remove="tag">
     <section id="Identification">
-        <div class="container">
+        <div class="container" sec:authorize="isAuthenticated()">
+
+            <p>Vous êtes actuellement connecté (<span sec:authentication="name"></span>).</p>
+            <button type="button" class="btn btn-success" onclick="window.location.href='/logout'">Se Déconnecter</button>
+        </div>
+        <div class="container" sec:authorize="!isAuthenticated()">
 
             <h1>Page d'identification MyLibrary</h1>
 

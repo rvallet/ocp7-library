@@ -12,5 +12,6 @@ public interface UserService {
     User findUserById (Long id);
     User findUserByEmail (String email);
     User saveUser(User user);
+    List<User> saveAll(List<User> userList);
 
 }
