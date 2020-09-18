@@ -3,6 +3,7 @@ package com.library.mslibrary.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -29,6 +30,9 @@ public class User implements Serializable {
     private String resetToken;
 
     private Date creationDate;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Collection<BookLoan> bookLoan;
 
     public User() {
         super();

@@ -9,6 +9,8 @@ public class ApplicationPropertiesConfig {
 
     private int pageSizeLimit;
 
+    private int bookLoanDuration;
+
     public int getPageSizeLimit() {
         return pageSizeLimit;
     }
@@ -16,4 +18,9 @@ public class ApplicationPropertiesConfig {
     public void setPageSizeLimit(int pageSizeLimit) {
         this.pageSizeLimit = pageSizeLimit;
     }
+
+    public int getBookLoanDuration() { return bookLoanDuration; }
+
+    public void setBookLoanDuration(int bookLoanDuration) {this.bookLoanDuration = bookLoanDuration;}
+
 }

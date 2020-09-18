@@ -1,0 +1,13 @@
+package com.library.mslibrary.service;
+
+import com.library.mslibrary.entities.Book;
+
+
+import java.util.List;
+
+public interface BookService {
+    List<Book> findAll();
+    Book findBookById (Long id);
+    Book saveBook (Book book);
+    List<Book> saveAll (List<Book> bookList);
+}
