@@ -3,8 +3,6 @@ package com.library.website.proxies;
 import com.library.website.beans.BookBean;
 import com.library.website.beans.BookLoanBean;
 import com.library.website.beans.UserBean;
-import com.library.website.service.UserService;
-import feign.Body;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +28,9 @@ public interface MicroServiceLibraryProxy {
 
     @GetMapping(value= "/bookLoan/{id}")
     BookLoanBean getBookLoanById(@PathVariable String id);
+
+    @GetMapping(value= "/findBookLoansListByUserId/{userId}")
+    List<BookLoanBean> getBookLoansByUserId(@PathVariable String userId);
 
     @GetMapping(value = "/userDetails")
     UserDetails getUserDetails() ;

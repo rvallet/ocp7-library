@@ -21,7 +21,9 @@ public class BookController {
 
     @GetMapping("/livres")
     public String bookList (Model model) {
+        LOGGER.debug("Envoie d'un demande de listes de livres");
         List<BookBean> bookList = msLibraryProxy.getBookList();
+        LOGGER.info("Réception d'une liste de {} livres.", bookList.size());
         model.addAttribute("bookList" , bookList );
         return "livres";
     }

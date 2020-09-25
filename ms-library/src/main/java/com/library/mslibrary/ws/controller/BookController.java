@@ -24,10 +24,11 @@ public class BookController {
     @Autowired
     private ApplicationPropertiesConfig applicationPropertiesConfig;
 
-    @GetMapping(value= ApiRegistration.REST_BOOKS)
+    @GetMapping(value= ApiRegistration.REST_BOOKS_LIST)
     public List<Book> getBookList() throws NoSuchResultException {
+        LOGGER.debug("getBookList from BookService");
         List<Book> bookList = bookService.findAll();
-        LOGGER.info("Chargement d'une liste de livre : {} founds", bookList.size());
+        LOGGER.info("Envoi d'une liste de {} livres", bookList.size());
         if (bookList.isEmpty()) throw new NoSuchResultException("Aucun Livre");
         //TODO : return pageable with properties
         return bookList;

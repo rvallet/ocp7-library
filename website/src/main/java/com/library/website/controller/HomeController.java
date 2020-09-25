@@ -26,7 +26,9 @@ public class HomeController {
 
     @GetMapping(path= {"/", "/accueil"})
     public String accueil (Model model) {
+        LOGGER.info("Envoi d'une demande de liste des utilisateurs");
         List<UserBean> userList = msLibraryProxy.getUsers();
+        LOGGER.info("Réception d'une liste de {} utilisateurs", userList.size());
         model.addAttribute("userList", userList);
         return "accueil";
     }

@@ -31,8 +31,6 @@ public class BookBean {
 
     private Boolean isOnline;
 
-    private Collection<BookLoanBean> bookLoan;
-
     public Long getId() {
         return id;
     }
@@ -137,11 +135,4 @@ public class BookBean {
         isOnline = online;
     }
 
-    public Collection<BookLoanBean> getBookLoan() {
-        return bookLoan;
-    }
-
-    public void setBookLoan(Collection<BookLoanBean> bookLoan) {
-        this.bookLoan = bookLoan;
-    }
 }

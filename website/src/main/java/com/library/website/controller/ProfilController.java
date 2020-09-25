@@ -27,10 +27,12 @@ public class ProfilController {
         UserBean u = msLibraryProxy.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("user" , u );
 
-        List<BookLoanBean> bookLoanList = new ArrayList<>();
-        model.addAttribute("bookLoanList" , bookLoanList );
 
-        LOGGER.info("Chargment du profil {}", u.getEmail());
+        List<BookLoanBean> bookLoanList = msLibraryProxy.getBookLoansByUserId(u.getId().toString());
+        model.addAttribute("bookLoanList" , bookLoanList );
+        LOGGER.debug("bookLoanList : Size = {} (id du premier = {})", bookLoanList.size(), bookLoanList.isEmpty() ? "aucun" : bookLoanList.get(0).getId());
+
+        LOGGER.info("Chargement du profil {}", u.getEmail());
         return "user/profil";
     }
 }

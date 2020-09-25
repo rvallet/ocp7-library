@@ -1,7 +1,11 @@
 package com.library.mslibrary.entities;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -39,9 +43,13 @@ public class Book implements Serializable {
     private Boolean isOnline;
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<BookLoan> bookLoan;
 
     public Book() {
+        super();
+        this.isOnline = false;
+        this.isLoanAvailable = false;
     }
 
     public Book(String title, String description, String shortDescription, String author, String editor, String collection, String isbn, Date releaseDate) {
@@ -53,6 +61,8 @@ public class Book implements Serializable {
         this.collection = collection;
         this.isbn = isbn;
         this.releaseDate = releaseDate;
+        this.isOnline = false;
+        this.isLoanAvailable = this.stock > 0;
     }
 
     public Long getId() {

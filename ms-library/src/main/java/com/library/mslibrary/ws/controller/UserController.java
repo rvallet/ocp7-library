@@ -27,6 +27,7 @@ public class UserController {
     @GetMapping(value= ApiRegistration.REST_USERS)
     public List<User> getUsers() throws NoSuchResultException {
         List<User> userList = userService.findAll();
+        LOGGER.info("Envoi d'une liste de {} utilisateurs", userList.size());
         if (userList.isEmpty()) throw new NoSuchResultException("Aucun Utilisateur");
         //TODO : return pageable with properties
         LOGGER.debug("PageSizeLimit = {}", applicationPropertiesConfig.getPageSizeLimit());
