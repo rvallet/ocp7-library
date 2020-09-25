@@ -1,21 +1,10 @@
-package com.library.mslibrary.entities;
+package com.library.website.beans;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-@Entity
-@Table(name="book", uniqueConstraints = @UniqueConstraint(columnNames = "isbn"))
-public class Book implements Serializable {
+public class BookBean {
 
-    @Id
-    @Column(name="id_book")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     private String title;
@@ -41,29 +30,6 @@ public class Book implements Serializable {
     private Boolean isLoanAvailable;
 
     private Boolean isOnline;
-
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Collection<BookLoan> bookLoan;
-
-    public Book() {
-        super();
-        this.isOnline = false;
-        this.isLoanAvailable = false;
-    }
-
-    public Book(String title, String description, String shortDescription, String author, String editor, String collection, String isbn, Date releaseDate) {
-        this.title = title;
-        this.description = description;
-        this.shortDescription = shortDescription;
-        this.author = author;
-        this.editor = editor;
-        this.collection = collection;
-        this.isbn = isbn;
-        this.releaseDate = releaseDate;
-        this.isOnline = false;
-        this.isLoanAvailable = this.stock > 0;
-    }
 
     public Long getId() {
         return id;
@@ -137,6 +103,14 @@ public class Book implements Serializable {
         this.imgPathThAttribute = imgPathThAttribute;
     }
 
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
     public int getStock() {
         return stock;
     }
@@ -145,12 +119,12 @@ public class Book implements Serializable {
         this.stock = stock;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
+    public Boolean getLoanAvailable() {
+        return isLoanAvailable;
     }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setLoanAvailable(Boolean loanAvailable) {
+        isLoanAvailable = loanAvailable;
     }
 
     public Boolean getOnline() {
@@ -161,19 +135,4 @@ public class Book implements Serializable {
         isOnline = online;
     }
 
-    public Collection<BookLoan> getBookLoan() {
-        return bookLoan;
-    }
-
-    public void setBookLoan(Collection<BookLoan> bookLoan) {
-        this.bookLoan = bookLoan;
-    }
-
-    public Boolean getLoanAvailable() {
-        return isLoanAvailable;
-    }
-
-    public void setLoanAvailable(Boolean loanAvailable) {
-        isLoanAvailable = loanAvailable;
-    }
 }

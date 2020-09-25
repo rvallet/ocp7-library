@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{base}">
+
+<head th:insert="base :: head"></head>
+<head>
+    <title>Emprunter des livres - MyLibrary </title>
+    <meta name="description" content="Consultez et emprunter des livres en ligne - MyLibrary"/>
+</head>
+<body>
+<th:block th:insert="base :: header">...</th:block>
+<main layout:fragment="main" role="main" th:remove="tag">
+    <section id="Livres">
+        <div class="container">
+
+            <h1>Consulter et emprunter des livres</h1>
+
+            <div class="col-md-12" th:if="${bookList!=null and !bookList.isEmpty()}">
+                <br />
+                <h3>Nos livres</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Titre</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Auteur</th>
+                            <th scope="col">Collection</th>
+                            <th scope="col">Parution</th>
+                            <th scope="col">Disponibilité</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="book:${bookList}">
+                            <th scope="row"><span th:text="${book.title}">Titre</span></th>
+                            <td><span th:text="${book.description}">Description</span></td>
+                            <td><span th:text="${book.author}">Auteur</span></td>
+                            <td><span th:text="${book.collection}">Collection</span></td>
+                            <td><span th:text="${#dates.format(book.releaseDate, 'dd/MM/yyyy')}">Parution</span></td>
+                            <td>
+                                <div class="text-center">
+                                    <span th:text="${book.getLoanAvailable()} ? 'Oui' : 'Non'">Disponibilité</span>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+</main>
+<th:block th:insert="base :: footer">...</th:block>
+<th:block th:insert="base :: script">...</th:block>
+</body>
+</html>

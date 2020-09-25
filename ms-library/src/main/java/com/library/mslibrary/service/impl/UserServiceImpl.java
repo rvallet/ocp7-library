@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         userRepository.save(user);
+        LOGGER.info("Utilisateur {} enregistré", user.getEmail());
         return user;
     }
 

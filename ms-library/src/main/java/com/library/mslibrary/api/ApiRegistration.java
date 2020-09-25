@@ -11,4 +11,16 @@ public interface ApiRegistration {
     String REST_GET_USER_BY_EMAIL = "/findUserByEmail";
 
     String REST_SAVE_USER = "/saveUser";
+
+    String REST_BOOKS_LIST = "/booksList";
+
+    String REST_BOOK_BY_ID = "/findBookById";
+
+    String REST_BOOK_LOANS_LIST = "/getBookLoansList";
+
+    String REST_BOOK_LOANS_LIST_BY_USER_ID = "/findBookLoansListByUserId";
+
+    String REST_BOOKS_LOANS = "/booksLoans";
+
+    String REST_GET_BOOK_BY_ID = "/findBookById";
 }

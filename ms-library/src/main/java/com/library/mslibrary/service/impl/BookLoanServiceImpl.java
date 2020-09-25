@@ -29,6 +29,13 @@ public class BookLoanServiceImpl implements BookLoanService {
     }
 
     @Override
+    public List<BookLoan> findBookLoansByUserId (Long userId) {
+        List<BookLoan> bookLoanList = bookLoanRepository.findBookLoansByUserId(userId);
+        LOGGER.info("Envoie d'une liste de {} emprunts (utilisateur id = {}).", bookLoanList.size(), userId);
+        return bookLoanList;
+    }
+
+    @Override
     public BookLoan saveBookLoan(BookLoan bookLoan) {
         return bookLoanRepository.save(bookLoan);
     }

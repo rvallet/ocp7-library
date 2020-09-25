@@ -1,5 +1,6 @@
 package com.library.mslibrary.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.library.mslibrary.enumerated.BookLoanStatusEnum;
 import com.library.mslibrary.utils.DateTools;
 
@@ -33,6 +34,10 @@ public class BookLoan implements Serializable {
     private Book book;
 
     public BookLoan() {
+        super();
+        this.startLoan = new Date();
+        this.isLoanExtended = false;
+        this.loanStatus = BookLoanStatusEnum.IN_PROGRESS.toString();
     }
 
     public BookLoan(User user, Book book, int bookLoanDuration) {
