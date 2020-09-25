@@ -46,8 +46,6 @@ public class MsLibraryApplication implements CommandLineRunner {
 	@Autowired
 	private BookLoanService bookLoanService;
 
-
-
 	public static void main(String[] args) {
 		SpringApplication.run(MsLibraryApplication.class, args);
 	}
@@ -77,6 +75,20 @@ public class MsLibraryApplication implements CommandLineRunner {
 							"user2_firstName",
 							webSecurityConfig.passwordEncoder().encode("passwordUser2"),
 							"user"
+					),
+					new User(
+							"email@admin1.fr",
+							"admin1_lastName",
+							"admin1_firstName",
+							webSecurityConfig.passwordEncoder().encode("passwordAdmin1"),
+							"admin"
+					),
+					new User(
+							"email@admin2.fr",
+							"admin2_lastName",
+							"admin2_firstName",
+							webSecurityConfig.passwordEncoder().encode("passwordAdmin2"),
+							"admin"
 					)
 			);
 
