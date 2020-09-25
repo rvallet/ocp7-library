@@ -28,7 +28,8 @@ public class UserController {
     public List<User> getUsers() throws NoSuchResultException {
         List<User> userList = userService.findAll();
         if (userList.isEmpty()) throw new NoSuchResultException("Aucun Utilisateur");
-        LOGGER.info("PageSizeLimit = {}", applicationPropertiesConfig.getPageSizeLimit());
+        //TODO : return pageable with properties
+        LOGGER.debug("PageSizeLimit = {}", applicationPropertiesConfig.getPageSizeLimit());
         return userList;
     }
 

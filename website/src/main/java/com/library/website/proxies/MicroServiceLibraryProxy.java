@@ -19,6 +19,9 @@ public interface MicroServiceLibraryProxy {
     @GetMapping(value= "/users")
     List<UserBean> getUsers();
 
+    @GetMapping(value= "/booksList")
+    List<BookBean> getBookList();
+
     @GetMapping(value= "/user/{id}")
     UserBean getUserById(@PathVariable String id);
 

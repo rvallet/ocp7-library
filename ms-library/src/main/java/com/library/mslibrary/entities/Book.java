@@ -1,12 +1,13 @@
 package com.library.mslibrary.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
 @Entity
 @Table(name="book", uniqueConstraints = @UniqueConstraint(columnNames = "isbn"))
-public class Book {
+public class Book implements Serializable {
 
     @Id
     @Column(name="id_book")

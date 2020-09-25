@@ -1,5 +1,6 @@
 package com.library.mslibrary.ws.controller;
 
+import com.library.mslibrary.config.ApplicationPropertiesConfig;
 import com.library.mslibrary.service.BookLoanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,9 @@ public class BookLoanController {
 
     @Autowired
     BookLoanService bookLoanService;
+
+    @Autowired
+    private ApplicationPropertiesConfig applicationPropertiesConfig;
 
 
 
