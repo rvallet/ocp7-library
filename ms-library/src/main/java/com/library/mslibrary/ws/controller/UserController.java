@@ -35,9 +35,9 @@ public class UserController {
     }
 
     @GetMapping(value= ApiRegistration.REST_GET_USER_BY_EMAIL + "/{email}")
-    public Optional<User> getUserByEmail(@PathVariable String email) throws NoSuchResultException {
+    public User getUserByEmail(@PathVariable String email) throws NoSuchResultException {
         Optional<User> user = Optional.ofNullable(userService.findUserByEmail(email));
-        return user;
+        return user.get();
     }
 
     @PostMapping(value = ApiRegistration.REST_SAVE_USER)

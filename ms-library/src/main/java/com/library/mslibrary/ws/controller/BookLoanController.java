@@ -31,10 +31,19 @@ public class BookLoanController {
         LOGGER.debug("findBookLoansListByUserId for userId = {}", userId);
         List<BookLoan> bookLoanList = bookLoanService.findBookLoansByUserId(Long.parseLong(userId));
         LOGGER.info("Envoi d'une liste de {} emprunts", bookLoanList.size());
-        if (bookLoanList.isEmpty()) throw new NoSuchResultException("Aucun emprunts");
+            //TODO : return pageable with properties
+            LOGGER.debug("PageSizeLimit = {}", applicationPropertiesConfig.getPageSizeLimit());
+            return bookLoanList;
+    }
+
+    @GetMapping(value= ApiRegistration.REST_BOOK_LOANS_LIST)
+    public List<BookLoan> findBookLoansList() throws NoSuchResultException {
+        List<BookLoan> bookLoanList = bookLoanService.findAll();
+        LOGGER.info("Envoi d'une liste de {} emprunts", bookLoanList.size());
         //TODO : return pageable with properties
         LOGGER.debug("PageSizeLimit = {}", applicationPropertiesConfig.getPageSizeLimit());
         return bookLoanList;
     }
 
 }
+
