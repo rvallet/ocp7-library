@@ -8,6 +8,7 @@ import com.library.mslibrary.ws.exception.NoSuchResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,12 @@ public class UserController {
         LOGGER.debug("PageSizeLimit = {}", applicationPropertiesConfig.getPageSizeLimit());
         return userList;
     }
+
+    @GetMapping(value= ApiRegistration.REST_USERS + ApiRegistration.REST_PAGINATION + "/{pageNumber}")
+    public Page<User> getPaginatedUsers(@PathVariable int pageNumber) throws NoSuchResultException {
+        return userService.findPaginatedUsers(pageNumber-1, applicationPropertiesConfig.getPageSizeLimit());
+    }
+
 
     @GetMapping(value= ApiRegistration.REST_GET_USER_BY_EMAIL + "/{email}")
     public User getUserByEmail(@PathVariable String email) throws NoSuchResultException {

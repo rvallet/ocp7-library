@@ -94,8 +94,6 @@ public class MsLibraryApplication implements CommandLineRunner {
 
 			userService.saveAll(userList);
 			LOGGER.info("Ajout de {} Utilisateurs", userList.size());
-		} else {
-			LOGGER.debug("Des utilisateurs existent déjà en BDD");
 		}
 
 		if (isBddInit) {
@@ -130,7 +128,6 @@ public class MsLibraryApplication implements CommandLineRunner {
 				LOGGER.info("Ajout de {} Livres", bookList.size());
 			}
 
-		}
 			if (CollectionUtils.isEmpty(bookLoanService.findAll())) {
 				LOGGER.info("Création d'un jeu de données d'emprunt de livre en BDD");
 				List<BookLoan> bookLoanList = Arrays.asList(
@@ -149,6 +146,13 @@ public class MsLibraryApplication implements CommandLineRunner {
 				LOGGER.info("Ajout de {} prêt de livres", bookLoanList.size());
 
 			}
+		}
+
+		if (!isBddInit) {
+			LOGGER.info("Des utilisateurs existent déjà en BDD - FIN de création du jeu de données");
+		} else {
+			LOGGER.info("FIN de création du jeu de données");
+		}
 	}
 
 }

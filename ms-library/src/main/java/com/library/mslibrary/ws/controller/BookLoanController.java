@@ -45,5 +45,19 @@ public class BookLoanController {
         return bookLoanList;
     }
 
+    @GetMapping(value= ApiRegistration.REST_BOOK_LOANS_EXTEND + "/{bookLoanId}")
+    public BookLoan extendBookLoan(@PathVariable Long bookLoanId) throws NoSuchResultException {
+        BookLoan bl = bookLoanService.extendBookLoan(bookLoanId);
+        LOGGER.info("Prolongation de l'emprunt bookLoanId = {}", bookLoanId);
+        return bl;
+    }
+
+    @GetMapping(value= ApiRegistration.REST_GET_BOOK_LOAN_BY_ID + "/{bookLoanId}")
+    public BookLoan findBookLoanById(@PathVariable Long bookLoanId) throws NoSuchResultException {
+        BookLoan bl = bookLoanService.findBookLoanById(bookLoanId);
+        LOGGER.info("Recherche de l'emprunt bookLoanId = {}", bookLoanId);
+        return bl;
+    }
+
 }
 

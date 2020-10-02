@@ -103,7 +103,7 @@
                                         <div class="text-center">
                                             <span th:text="${bookLoan.getLoanExtended()} ? 'Oui' : 'Non'">Prolongation de l'emprunt</span>
                                             <div th:if="${!bookLoan.getLoanExtended()}">
-                                                <form th:action="@{/bookloan/update-bookloan}" th:object="${bookLoan}" method="get">
+                                                <form th:action="@{/user/update-bookloan}" th:object="${bookLoan}" method="get">
                                                     <input type="hidden" name="id" th:value="${bookLoan?.id}">
                                                     <input type="hidden" name="action" th:value="loanextended">
                                                     <button class="text-center" type="submit">Prolonger</button>

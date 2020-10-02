@@ -23,4 +23,10 @@ public interface ApiRegistration {
     String REST_BOOKS_LOANS = "/booksLoans";
 
     String REST_GET_BOOK_BY_ID = "/findBookById";
+
+    String REST_PAGINATION = "/page";
+
+    String REST_BOOK_LOANS_EXTEND = "/extendBookLoan";
+
+    String REST_GET_BOOK_LOAN_BY_ID = "/bookLoan";
 }
