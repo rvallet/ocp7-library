@@ -36,7 +36,7 @@
                     <a class="nav-item nav-link" id="nav-bookloan-tab"
                        data-toggle="tab" href="#nav-bookloan"
                        role="tab" aria-controls="nav-bookloan"
-                       aria-selected="false">Mes Emprunts
+                       aria-selected="false">Mes Emprunts en cours
                     </a>
                     <a class="nav-item nav-link" id="nav-history-tab"
                        data-toggle="tab" href="#nav-history"
@@ -93,7 +93,7 @@
                                     <th scope="col">Titre</th>
                                     <th scope="col">Statut</th>
                                     <th scope="col">Date de l'emprunt</th>
-                                    <th scope="col">Date de retour</th>
+                                    <th scope="col">Echéance</th>
                                     <th scope="col">Prolongation de l'emprunt</th>
                                 </tr>
                                 </thead>
@@ -103,7 +103,7 @@
                                     <td><span th:text="${bookLoan.book?.title}">Titre</span></td>
                                     <td><span th:text="${bookLoan.loanStatus}">Statut</span></td>
                                     <td><span th:text="${#dates.format(bookLoan.startLoan, 'dd/MM/yyyy')}">Date de l'emprunt</span></td>
-                                    <td><span th:text="${#dates.format(bookLoan.endLoan, 'dd/MM/yyyy')}">Date de retour</span></td>
+                                    <td><span th:text="${#dates.format(bookLoan.endLoan, 'dd/MM/yyyy')}">Echéance</span></td>
                                     <td>
                                         <div class="text-center">
                                             <span th:text="${bookLoan.getLoanExtended()} ? 'Oui' : 'Non'">Prolongation de l'emprunt</span>
@@ -141,6 +141,7 @@
                                     <th scope="col">Titre</th>
                                     <th scope="col">Statut</th>
                                     <th scope="col">Date de l'emprunt</th>
+                                    <th scope="col">Echéance</th>
                                     <th scope="col">Date de retour</th>
                                     <th scope="col">Prolongation de l'emprunt</th>
                                 </tr>
@@ -151,7 +152,12 @@
                                     <td><span th:text="${bookLoan.book?.title}">Titre</span></td>
                                     <td><span th:text="${bookLoan.loanStatus}">Statut</span></td>
                                     <td><span th:text="${#dates.format(bookLoan.startLoan, 'dd/MM/yyyy')}">Date de l'emprunt</span></td>
-                                    <td><span th:text="${#dates.format(bookLoan.endLoan, 'dd/MM/yyyy')}">Date de retour</span></td>
+                                    <td><span th:text="${#dates.format(bookLoan.endLoan, 'dd/MM/yyyy')}">Echéance</span></td>
+                                    <td>
+                                        <div class="text-center">
+                                            <span th:text="${bookLoan.returnLoan!=null} ? ${#dates.format(bookLoan.returnLoan, 'dd/MM/yyyy')} : '----'">Date de retour</span>
+                                        </div>
+                                    </td>
                                     <td>
                                         <div class="text-center">
                                             <span th:text="${bookLoan.getLoanExtended()} ? 'Oui' : 'Non'">Prolongation de l'emprunt</span>

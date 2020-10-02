@@ -19,6 +19,31 @@
 
             <h1>Consulter et emprunter des livres</h1>
 
+            <!-- 					Basic Search Criteria			 -->
+<!--            <H2>Rechercher un livre</H2>
+            <form th:action="@{books}" method="get">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary">Filtrer</button>
+                    </div>
+                    <input type="text" id="searchValue" name="searchValue" th:value="${searchValue}" class="form-control" placeholder="Tapez votre recherche" />
+                    <select class="form-control" th:field="*{searchCriteria}" id="searchCriteria">
+                        <option th:value="title">Recherche par titre</option>
+                        <option th:value="author">Recherche par auteur</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-default btn-sm" onclick="document.getElementById('searchValue').value = ''">
+                            <span class="glyphicon glyphicon-remove">Supprimer</span>
+                        </button>
+                    </div>
+                </div>
+            </form>-->
+                <!-- 					Les Livres			 -->
+            <div class="col-md-12" th:if="${bookList==null or bookList.isEmpty()}">
+                <br />
+                <h3>Nos livres</h3>
+                Aucun résultat
+            </div>
             <div class="col-md-12" th:if="${bookList!=null and !bookList.isEmpty()}">
                 <br />
                 <h3>Nos livres</h3>
