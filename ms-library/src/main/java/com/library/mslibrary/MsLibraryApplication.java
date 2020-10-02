@@ -10,6 +10,7 @@ import com.library.mslibrary.service.BookLoanService;
 import com.library.mslibrary.service.BookService;
 import com.library.mslibrary.service.UserService;
 import com.library.mslibrary.utils.DateTools;
+import com.library.mslibrary.utils.RandomTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,7 +112,7 @@ public class MsLibraryApplication implements CommandLineRunner {
 								"editor1",
 								"collection1",
 								"isbn1",
-								DateTools.addDays(new Date(), -365)
+								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						),
 						new Book(
 								"title2",
@@ -121,9 +122,95 @@ public class MsLibraryApplication implements CommandLineRunner {
 								"editor2",
 								"collection2",
 								"isbn2",
-								DateTools.addDays(new Date(), -265)
+								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
+						),
+						new Book(
+								"title3",
+								"description3",
+								"shortDescription3",
+								"author3",
+								"editor3",
+								"collection3",
+								"isbn3",
+								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
+						),
+						new Book(
+								"title4",
+								"description4",
+								"shortDescription4",
+								"author4",
+								"editor4",
+								"collection4",
+								"isbn4",
+								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
+						),
+						new Book(
+								"title5",
+								"description5",
+								"shortDescription5",
+								"author5",
+								"editor5",
+								"collection5",
+								"isbn5",
+								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
+						),
+						new Book(
+								"title6",
+								"description6",
+								"shortDescription6",
+								"author6",
+								"editor6",
+								"collection6",
+								"isbn6",
+								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
+						),
+						new Book(
+								"title7",
+								"description7",
+								"shortDescription7",
+								"author7",
+								"editor7",
+								"collection7",
+								"isbn7",
+								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
+						),
+						new Book(
+								"title8",
+								"description8",
+								"shortDescription8",
+								"author8",
+								"editor8",
+								"collection8",
+								"isbn8",
+								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
+						),
+						new Book(
+								"title9",
+								"description9",
+								"shortDescription9",
+								"author9",
+								"editor9",
+								"collection9",
+								"isbn9",
+								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
+						),
+						new Book(
+								"title10",
+								"description10",
+								"shortDescription10",
+								"author10",
+								"editor10",
+								"collection10",
+								"isbn10",
+								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						)
 				);
+
+				for (Book book : bookList) {
+					book.setLoanAvailable(true);
+					book.setOnline(true);
+					book.setStock(RandomTools.randomNum(0,5));
+				}
 				bookService.saveAll(bookList);
 				LOGGER.info("Ajout de {} Livres", bookList.size());
 			}
@@ -139,6 +226,16 @@ public class MsLibraryApplication implements CommandLineRunner {
 						new BookLoan(
 								userService.findUserByEmail("email@user2.fr"),
 								bookService.findBookById(2L),
+								appConfig.getBookLoanDuration()
+						),
+						new BookLoan(
+								userService.findUserByEmail("email@user1.fr"),
+								bookService.findBookById(2L),
+								appConfig.getBookLoanDuration()
+						),
+						new BookLoan(
+								userService.findUserByEmail("email@user2.fr"),
+								bookService.findBookById(1L),
 								appConfig.getBookLoanDuration()
 						)
 				);

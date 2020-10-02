@@ -43,7 +43,10 @@
                             <td><span th:text="${#dates.format(book.releaseDate, 'dd/MM/yyyy')}">Parution</span></td>
                             <td>
                                 <div class="text-center">
-                                    <span th:text="${book.getLoanAvailable()} ? 'Oui' : 'Non'">Disponibilité</span>
+                                    <span th:text="${book.getLoanAvailable()} ? '✔ Oui' : '❌ Non'">Disponibilité</span>
+                                    <div th:if="${book.getLoanAvailable()}">
+                                        <span th:text="${book.getStock()}">Stock</span>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

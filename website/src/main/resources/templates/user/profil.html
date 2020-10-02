@@ -38,6 +38,11 @@
                        role="tab" aria-controls="nav-bookloan"
                        aria-selected="false">Mes Emprunts
                     </a>
+                    <a class="nav-item nav-link" id="nav-history-tab"
+                       data-toggle="tab" href="#nav-history"
+                       role="tab" aria-controls="nav-history"
+                       aria-selected="false">Mon Historique
+                    </a>
                 </div>
             </nav>
 
@@ -117,6 +122,48 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 					Mon Historique d'emprunts de Livres -->
+                <div class="tab-pane fade" id="nav-history" role="tabpanel" aria-labelledby="nav-history-tab">
+                    <div class="col-md-12" th:if="${bookLoanList==null or bookLoanList.isEmpty()}">
+                        <br />
+                        <h3>Mon historique</h3>
+                        <p>Vous n'avez aucun emprunt de livres en cours</p>
+                    </div>
+                    <div class="col-md-12" th:if="${bookLoanList!=null and !bookLoanList.isEmpty()}">
+                        <br />
+                        <h3>Mon historique</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Titre</th>
+                                    <th scope="col">Statut</th>
+                                    <th scope="col">Date de l'emprunt</th>
+                                    <th scope="col">Date de retour</th>
+                                    <th scope="col">Prolongation de l'emprunt</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="bookLoan:${bookLoanList}">
+                                    <th scope="row"><span th:text="${bookLoan.id}">#</span></th>
+                                    <td><span th:text="${bookLoan.book?.title}">Titre</span></td>
+                                    <td><span th:text="${bookLoan.loanStatus}">Statut</span></td>
+                                    <td><span th:text="${#dates.format(bookLoan.startLoan, 'dd/MM/yyyy')}">Date de l'emprunt</span></td>
+                                    <td><span th:text="${#dates.format(bookLoan.endLoan, 'dd/MM/yyyy')}">Date de retour</span></td>
+                                    <td>
+                                        <div class="text-center">
+                                            <span th:text="${bookLoan.getLoanExtended()} ? 'Oui' : 'Non'">Prolongation de l'emprunt</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
 

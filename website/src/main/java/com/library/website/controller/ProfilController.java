@@ -65,6 +65,32 @@ public class ProfilController {
         return "redirect:/user/profil#nav-bookloan";
     }
 
+    @GetMapping("/admin/update-bookloan")
+    public String updateUserBookLoanAdmin(
+            @RequestParam (name="id") Long bookLoanId,
+            @RequestParam (name="action", required = false) String action,
+            Model model) {
+        UserBean u = msLibraryProxy.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        BookLoanBean bl = msLibraryProxy.getBookLoanById(bookLoanId);
+
+        if ("loanextended".equalsIgnoreCase(action)) {
+            msLibraryProxy.extendBookLoan(bookLoanId);
+            LOGGER.debug("Mise à jour de l'emprunt id {}", bookLoanId);
+            LOGGER.info("Mise à de l'emprunt id {} de l'utilisateur id {} par {} ({})", bookLoanId, bl.getUser().getId(), u.getEmail(), u.getRole());
+        }
+
+        if ("loanclosed".equalsIgnoreCase(action)) {
+            msLibraryProxy.closeBookLoan(bookLoanId);
+            LOGGER.debug("Cloture de l'emprunt id {}", bookLoanId);
+            LOGGER.info("Cloture de l'emprunt id {} de l'utilisateur id {} par {} ({})", bookLoanId, bl.getUser().getId(), u.getEmail(), u.getRole());
+        }
+
+        List<BookLoanBean> bookLoanList = msLibraryProxy.getBookLoansByUserId(u.getId().toString());
+        model.addAttribute("bookLoanList" , bookLoanList);
+
+        return "redirect:/admin/profil#nav-bookloan";
+    }
+
     @GetMapping("/admin/profil")
     public String adminProfil(Model model) {
         List<UserBean> usersList = msLibraryProxy.getUsers();

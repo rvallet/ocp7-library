@@ -101,7 +101,9 @@
                                     <th scope="col">Titre</th>
                                     <th scope="col">Statut</th>
                                     <th scope="col">Date de l'emprunt</th>
-                                    <th scope="col">Date de retour</th>
+                                    <th scope="col">Date d'échéance</th>
+                                    <th scope="col">Retour</th>
+                                    <th scope="col">Utilisateur</th>
                                     <th scope="col">Prolongation de l'emprunt</th>
                                 </tr>
                                 </thead>
@@ -111,12 +113,27 @@
                                     <td><span th:text="${bookLoan.book?.title}">Titre</span></td>
                                     <td><span th:text="${bookLoan.loanStatus}">Statut</span></td>
                                     <td><span th:text="${#dates.format(bookLoan.startLoan, 'dd/MM/yyyy')}">Date de l'emprunt</span></td>
-                                    <td><span th:text="${#dates.format(bookLoan.endLoan, 'dd/MM/yyyy')}">Date de retour</span></td>
+                                    <td><span th:text="${#dates.format(bookLoan.endLoan, 'dd/MM/yyyy')}">Echéance de l'emprunt</span></td>
+                                    <td>
+                                        <div class="text-center">
+                                            <div th:if="${bookLoan.returnLoan!=null}">
+                                            <span th:text="${#dates.format(bookLoan.returnLoan, 'dd/MM/yyyy')}">Date de retour</span>
+                                            </div>
+                                            <div th:if="${bookLoan.returnLoan==null}">
+                                                <form th:action="@{/admin/update-bookloan}" th:object="${bookLoan}" method="get">
+                                                    <input type="hidden" name="id" th:value="${bookLoan?.id}">
+                                                    <input type="hidden" name="action" th:value="loanclosed">
+                                                    <button class="text-center" type="submit">Valider un retour</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span th:text="${bookLoan.getUser().getEmail()}">Utilisateur</span></td>
                                     <td>
                                         <div class="text-center">
                                             <span th:text="${bookLoan.getLoanExtended()} ? 'Oui' : 'Non'">Prolongation de l'emprunt</span>
                                             <div th:if="${!bookLoan.getLoanExtended()}">
-                                                <form th:action="@{/bookloan/update-bookloan}" th:object="${bookLoan}" method="get">
+                                                <form th:action="@{/admin/update-bookloan}" th:object="${bookLoan}" method="get">
                                                     <input type="hidden" name="id" th:value="${bookLoan?.id}">
                                                     <input type="hidden" name="action" th:value="loanextended">
                                                     <button class="text-center" type="submit">Prolonger</button>
