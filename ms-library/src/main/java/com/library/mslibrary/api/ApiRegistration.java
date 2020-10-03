@@ -31,4 +31,6 @@ public interface ApiRegistration {
     String REST_BOOK_LOANS_CLOSE = "/closeBookLoan";
 
     String REST_GET_BOOK_LOAN_BY_ID = "/bookLoan";
+
+    String REST_GET_SEARCH_CRITERIA_LIST = "/getSearchCriteriaList";
 }

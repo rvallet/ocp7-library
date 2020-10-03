@@ -2,9 +2,9 @@ package com.library.mslibrary.enumerated;
 
 public enum SearchCriteriaEnum {
 
-    BY_AUTHOR ("author"),
-    BY_TITLE ("title"),
-    BY_COLLECTION ("collection");
+    BY_AUTHOR ("par auteur"),
+    BY_TITLE ("par titre"),
+    BY_COLLECTION ("par collection");
 
     private String searchCriteria;
 

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -56,6 +57,16 @@ public class BookServiceImpl implements BookService {
                     break;
             }
     }
+        return result;
+    }
+
+    @Override
+    public List<String> getSearchCriteriaList() {
+        List<String> result = new ArrayList<>();
+        for (SearchCriteriaEnum criteria : SearchCriteriaEnum.values()) {
+            result.add(criteria.toString());
+        }
+        LOGGER.info("Envoi d'une liste de {} critères de recherche", result.size());
         return result;
     }
 }
