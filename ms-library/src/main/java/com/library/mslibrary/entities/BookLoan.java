@@ -21,6 +21,8 @@ public class BookLoan implements Serializable {
 
     private Date endLoan;
 
+    private Date returnLoan;
+
     private Boolean isLoanExtended;
 
     private String loanStatus;
@@ -72,6 +74,10 @@ public class BookLoan implements Serializable {
     public void setEndLoan(Date endLoan) {
         this.endLoan = endLoan;
     }
+
+    public Date getReturnLoan() { return returnLoan; }
+
+    public void setReturnLoan(Date returnLoan) { this.returnLoan = returnLoan; }
 
     public Boolean getLoanExtended() {
         return isLoanExtended;

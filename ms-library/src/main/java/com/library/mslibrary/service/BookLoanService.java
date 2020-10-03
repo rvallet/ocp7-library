@@ -10,6 +10,8 @@ public interface BookLoanService {
     BookLoan findBookLoanById (Long id);
     List<BookLoan> findBookLoansByUserId (Long id);
     BookLoan saveBookLoan (BookLoan bookLoan);
+    BookLoan extendBookLoan (Long bookLoanId);
+    BookLoan closeBookLoan (Long bookLoanId);
     List<BookLoan> saveAll (List<BookLoan> bookLoanList);
 
 }

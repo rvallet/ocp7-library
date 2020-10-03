@@ -10,4 +10,6 @@ public interface BookService {
     Book findBookById (Long id);
     Book saveBook (Book book);
     List<Book> saveAll (List<Book> bookList);
+    List<Book> findBooksWithCriteria(String searchCriteria, String searchValue);
+    List<String> getSearchCriteriaList ();
 }

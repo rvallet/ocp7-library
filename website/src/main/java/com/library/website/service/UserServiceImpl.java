@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private Collection<? extends GrantedAuthority> convertRoleEnumToAuthorities(String role){
-        return AuthorityUtils.createAuthorityList(role);
+        return AuthorityUtils.createAuthorityList(role.toUpperCase());
     }
 
 }

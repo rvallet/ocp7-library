@@ -19,6 +19,39 @@
 
             <h1>Consulter et emprunter des livres</h1>
 
+            <!-- 					Basic Search Criteria			 -->
+            <H2>Rechercher un livre</H2>
+            <form th:action="@{livres}" method="get">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary">Filtrer</button>
+                    </div>
+                    <input type="text" id="searchValue" name="searchValue" th:value="${searchValue}" class="form-control" placeholder="Tapez votre recherche" required/>
+                    <div class="input-group-append">
+                        <button class="btn btn-default btn-sm" onclick="document.getElementById('searchValue').value = ''">
+                            <span class="glyphicon glyphicon-remove">Supprimer</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text">Critère de recherche</label>
+                    </div>
+                    <select class="form-control" id="searchCriteria" name="searchCriteria" th:value="${criteria}" required>
+                        <option value=""> -Sélectionner un critère de recherche- </option>
+                        <option th:each="criteria : ${searchCriteriaList}"
+                                th:value="${criteria}"
+                                th:utext="${criteria}"
+                                th:selected="${criteria}==${searchCriteria}"/>
+                    </select>
+                </div>
+            </form>
+                <!-- 					Les Livres			 -->
+            <div class="col-md-12" th:if="${bookList==null or bookList.isEmpty()}">
+                <br />
+                <h3>Nos livres</h3>
+                Aucun résultat
+            </div>
             <div class="col-md-12" th:if="${bookList!=null and !bookList.isEmpty()}">
                 <br />
                 <h3>Nos livres</h3>
@@ -43,7 +76,10 @@
                             <td><span th:text="${#dates.format(book.releaseDate, 'dd/MM/yyyy')}">Parution</span></td>
                             <td>
                                 <div class="text-center">
-                                    <span th:text="${book.getLoanAvailable()} ? 'Oui' : 'Non'">Disponibilité</span>
+                                    <span th:text="${book.getLoanAvailable()} ? '✔ Oui' : '❌ Non'">Disponibilité</span>
+                                    <div th:if="${book.getLoanAvailable()}">
+                                        <span th:text="${book.getStock()}">Stock</span>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

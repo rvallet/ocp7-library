@@ -6,6 +6,9 @@ import com.library.mslibrary.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -44,6 +47,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> saveAll(List<User> userList) {
         return userRepository.saveAll(userList);
+    }
+
+    @Override
+    public Page<User> findPaginatedUsers(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber-1, pageSize);
+        return this.userRepository.findAll(pageable);
     }
 
 }

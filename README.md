@@ -5,7 +5,8 @@ Développez le nouveau système d’information de la bibliothèque d’une gran
 
 ### Objet : 
 
-Nous souhaitons confier à la DSI la création d’un ensemble d’outils numériques pour les différents acteurs des bibliothèques de la ville. 
+Nous souhaitons confier à la DSI la création d’un ensemble d’outils numériques pour les différents acteurs des 
+bibliothèques de la ville. 
 
 En voici la liste :
 
@@ -16,7 +17,8 @@ Le site web permettra aux usagers de suivre les prêts de leurs ouvrages. Il pou
 
 Rechercher des ouvrages et voir le nombre d’exemplaires disponibles.
 Consulter leurs prêts en cours. Les prêts sont pour une période de 4 semaines.
-Prolonger un prêt en cours. Le prêt d’un ouvrage n’est prolongeable qu’une seule fois. La prolongation ajoute une nouvelle période de prêt (4 semaines) à la période initiale.
+Prolonger un prêt en cours. Le prêt d’un ouvrage n’est prolongeable qu’une seule fois. La prolongation ajoute une 
+nouvelle période de prêt (4 semaines) à la période initiale.
 Nous attendons également une application mobile iOS et Android qui fournira les mêmes services que le site web.
 
 Le logiciel pour le personnel des bibliothèques permettra notamment de gérer les emprunts et les livres rendus.
@@ -35,14 +37,17 @@ comme la gestion du site web de la ville par exemple.
 Vous êtes missionné pour la réalisation des premiers produits !
 
 #### Travail demandé : Release 1.0
-API Web
-Application web
-Batch
-
+- API Web Rest.
+- Application web framework MVC.
+- Batch de relance par email. 
 
 ### Livrables attendus :
+* Le code source des composants à développer de la Release 1.
+* Les scripts SQL de création de la base de données avec un jeu de données de démonstration.
+* Une documentation succincte expliquant comment déployer l'application.
 
 ## Installation
+~ En cours de rédaction ~
 
 ## Réalisé avec
 
@@ -55,11 +60,11 @@ Batch
 * [DBeaver](https://dbeaver.io/) - SGBD universelle, pour l'écriture des scripts SQL et des tests MySQL
 * [WampServer](http://www.wampserver.com/) - Gestion de serveurs Apache, PHP, MySQL (+PHP MyAdmin)
 
-## Autheurs
+## Auteurs
 
 * **Rémy VALLET** - *Initial work* - [rvallet](https://github.com/rvallet)
 
-<!-- Voir également la liste des [contributeurs](https://github.com/rvallet) qui ont participés au projet. -->
+<!-- Voir également la liste des [contributeurs](https://github.com/rvallet/ocp7-library/graphs/contributors) qui ont participés au projet. -->
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/rvallet/) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/rvallet/ocp7-library/blob/feature-user/LICENSE) file for details
