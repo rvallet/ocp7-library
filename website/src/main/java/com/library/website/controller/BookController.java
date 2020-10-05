@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +27,7 @@ public class BookController {
             @RequestParam(name="searchValue", required = false) String searchValue,
             Model model) {
 
-        LOGGER.debug("Envoie d'un demande de listes de livres");
+        LOGGER.debug("Envoie d'une demande de listes de livres");
         List<BookBean> bookList = msLibraryProxy.getBookList();
         List<String> searchCriteriaList = msLibraryProxy.getSearchCriteriaList();
 

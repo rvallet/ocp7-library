@@ -26,7 +26,7 @@
                     <div class="input-group-prepend">
                         <button class="btn btn-outline-secondary">Filtrer</button>
                     </div>
-                    <input type="text" id="searchValue" name="searchValue" th:value="${searchValue}" class="form-control" placeholder="Tapez votre recherche" required/>
+                    <input type="text" id="searchValue" name="searchValue" th:value="${searchValue}" class="form-control" placeholder="Tapez votre recherche" />
                     <div class="input-group-append">
                         <button class="btn btn-default btn-sm" onclick="document.getElementById('searchValue').value = ''">
                             <span class="glyphicon glyphicon-remove">Supprimer</span>
@@ -68,7 +68,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="book:${bookList}">
+                        <tr th:each="book:${bookList}" th:if="${book.getOnline()}">
                             <th scope="row"><span th:text="${book.title}">Titre</span></th>
                             <td><span th:text="${book.description}">Description</span></td>
                             <td><span th:text="${book.author}">Auteur</span></td>
