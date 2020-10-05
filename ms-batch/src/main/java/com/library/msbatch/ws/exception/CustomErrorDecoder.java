@@ -11,7 +11,7 @@ public class CustomErrorDecoder implements ErrorDecoder {
     public Exception decode(String request, Response response) {
 
         if(response.status() == 400 ) {
-            return new NoSuchResultException("Requête incorrecte");
+            return new NoSuchResultException("Requête incorrecte : aucun résultat");
         }
 
         return defaultErrorDecoder.decode(request, response);
