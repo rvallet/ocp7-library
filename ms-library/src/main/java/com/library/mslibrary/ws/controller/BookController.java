@@ -34,4 +34,9 @@ public class BookController {
         return bookList;
     }
 
+    @GetMapping(value= ApiRegistration.REST_GET_SEARCH_CRITERIA_LIST)
+    public List<String> getSearchCriteriaList(){
+        return bookService.getSearchCriteriaList();
+    }
+
 }

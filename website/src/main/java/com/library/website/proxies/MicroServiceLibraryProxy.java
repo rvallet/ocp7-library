@@ -5,6 +5,7 @@ import com.library.website.beans.BookLoanBean;
 import com.library.website.beans.UserBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,9 @@ public interface MicroServiceLibraryProxy {
     @GetMapping(value= "/users")
     List<UserBean> getUsers();
 
+    @GetMapping(value= "/users/page/{pageNumber}/{pageSize}")
+    Page<UserBean> getPaginatedUsers(@PathVariable int pageNumber, @PathVariable int pageSize);
+
     @GetMapping(value= "/booksList")
     List<BookBean> getBookList();
 
@@ -26,11 +30,14 @@ public interface MicroServiceLibraryProxy {
     @GetMapping(value= "/book/{id}")
     BookBean getBookById(@PathVariable String id);
 
-    @GetMapping(value= "/bookLoan/{id}")
-    BookLoanBean getBookLoanById(@PathVariable String id);
+    @GetMapping(value= "/bookLoan/{bookLoanId}")
+    BookLoanBean getBookLoanById(@PathVariable Long bookLoanId);
 
     @GetMapping(value= "/findBookLoansListByUserId/{userId}")
     List<BookLoanBean> getBookLoansByUserId(@PathVariable String userId);
+
+    @GetMapping(value= "/getBookLoansList")
+    List<BookLoanBean> getBookLoansList();
 
     @GetMapping(value = "/userDetails")
     UserDetails getUserDetails() ;
@@ -47,5 +54,12 @@ public interface MicroServiceLibraryProxy {
     @PostMapping(value = "/saveBookLoan")
     BookLoanBean saveBookLoan(@RequestBody BookLoanBean bookLoanBean);
 
+    @GetMapping(value = "/extendBookLoan/{bookLoanId}")
+    BookLoanBean extendBookLoan(@PathVariable Long bookLoanId);
 
+    @GetMapping(value = "/closeBookLoan/{bookLoanId}")
+    BookLoanBean closeBookLoan(@PathVariable Long bookLoanId);
+
+    @GetMapping(value="/getSearchCriteriaList")
+    List<String> getSearchCriteriaList();
 }

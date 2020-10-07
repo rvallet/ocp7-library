@@ -31,10 +31,40 @@ public class BookLoanController {
         LOGGER.debug("findBookLoansListByUserId for userId = {}", userId);
         List<BookLoan> bookLoanList = bookLoanService.findBookLoansByUserId(Long.parseLong(userId));
         LOGGER.info("Envoi d'une liste de {} emprunts", bookLoanList.size());
-        if (bookLoanList.isEmpty()) throw new NoSuchResultException("Aucun emprunts");
+            //TODO : return pageable with properties
+            LOGGER.debug("PageSizeLimit = {}", applicationPropertiesConfig.getPageSizeLimit());
+            return bookLoanList;
+    }
+
+    @GetMapping(value= ApiRegistration.REST_BOOK_LOANS_LIST)
+    public List<BookLoan> findBookLoansList() throws NoSuchResultException {
+        List<BookLoan> bookLoanList = bookLoanService.findAll();
+        LOGGER.info("Envoi d'une liste de {} emprunts", bookLoanList.size());
         //TODO : return pageable with properties
         LOGGER.debug("PageSizeLimit = {}", applicationPropertiesConfig.getPageSizeLimit());
         return bookLoanList;
     }
 
+    @GetMapping(value= ApiRegistration.REST_BOOK_LOANS_EXTEND + "/{bookLoanId}")
+    public BookLoan extendBookLoan(@PathVariable Long bookLoanId) throws NoSuchResultException {
+        BookLoan bl = bookLoanService.extendBookLoan(bookLoanId);
+        LOGGER.info("Prolongation de l'emprunt bookLoanId = {}", bookLoanId);
+        return bl;
+    }
+
+    @GetMapping(value= ApiRegistration.REST_BOOK_LOANS_CLOSE + "/{bookLoanId}")
+    public BookLoan closeBookLoan(@PathVariable Long bookLoanId) throws NoSuchResultException {
+        BookLoan bl = bookLoanService.closeBookLoan(bookLoanId);
+        LOGGER.info("Clôture de l'emprunt bookLoanId = {}", bookLoanId);
+        return bl;
+    }
+
+    @GetMapping(value= ApiRegistration.REST_GET_BOOK_LOAN_BY_ID + "/{bookLoanId}")
+    public BookLoan findBookLoanById(@PathVariable Long bookLoanId) throws NoSuchResultException {
+        BookLoan bl = bookLoanService.findBookLoanById(bookLoanId);
+        LOGGER.info("Recherche de l'emprunt bookLoanId = {}", bookLoanId);
+        return bl;
+    }
+
 }
+
