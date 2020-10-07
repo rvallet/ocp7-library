@@ -16,7 +16,7 @@
 <main layout:fragment="main" role="main" th:remove="tag">
     <section id="Livres">
         <div class="container">
-
+            <div class="col-md-12">
             <h1>Consulter et emprunter des livres</h1>
 
             <!-- 					Basic Search Criteria			 -->
@@ -26,7 +26,7 @@
                     <div class="input-group-prepend">
                         <button class="btn btn-outline-secondary">Filtrer</button>
                     </div>
-                    <input type="text" id="searchValue" name="searchValue" th:value="${searchValue}" class="form-control" placeholder="Tapez votre recherche" required/>
+                    <input type="text" id="searchValue" name="searchValue" th:value="${searchValue}" class="form-control" placeholder="Tapez votre recherche" />
                     <div class="input-group-append">
                         <button class="btn btn-default btn-sm" onclick="document.getElementById('searchValue').value = ''">
                             <span class="glyphicon glyphicon-remove">Supprimer</span>
@@ -47,12 +47,12 @@
                 </div>
             </form>
                 <!-- 					Les Livres			 -->
-            <div class="col-md-12" th:if="${bookList==null or bookList.isEmpty()}">
+            <div th:if="${bookList==null or bookList.isEmpty()}">
                 <br />
                 <h3>Nos livres</h3>
                 Aucun résultat
             </div>
-            <div class="col-md-12" th:if="${bookList!=null and !bookList.isEmpty()}">
+            <div th:if="${bookList!=null and !bookList.isEmpty()}">
                 <br />
                 <h3>Nos livres</h3>
                 <div class="table-responsive">
@@ -68,7 +68,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="book:${bookList}">
+                        <tr th:each="book:${bookList}" th:if="${book.getOnline()}">
                             <th scope="row"><span th:text="${book.title}">Titre</span></th>
                             <td><span th:text="${book.description}">Description</span></td>
                             <td><span th:text="${book.author}">Auteur</span></td>
@@ -88,7 +88,7 @@
                 </div>
             </div>
 
-
+            </div>
         </div>
     </section>
 </main>

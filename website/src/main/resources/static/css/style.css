@@ -13,11 +13,26 @@ h1
 	text-transform: capitalize;
 }
 
+table {
+	width: 99%
+}
 table td
 {
 	vertical-align:top;
 	border:solid 1px #888;
 	padding:10px;
+}
+
+.thead-dark{
+	border: 1px solid black;
+}
+.fixed-bottom{
+	padding: 0 16px;
+}
+
+.navbar>.container, .navbar>.container-fluid
+{
+	margin:0px;
 }
 
 [aria-expanded="false"] > .expanded,

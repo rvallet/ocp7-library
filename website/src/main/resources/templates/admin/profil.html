@@ -124,7 +124,7 @@
                                             <div th:if="${bookLoan.returnLoan!=null}">
                                             <span th:text="${#dates.format(bookLoan.returnLoan, 'dd/MM/yyyy')}">Date de retour</span>
                                             </div>
-                                            <div th:if="${bookLoan.returnLoan==null}">
+                                            <div>
                                                 <form th:action="@{/admin/update-bookloan}" th:object="${bookLoan}" method="get">
                                                     <input type="hidden" name="id" th:value="${bookLoan?.id}">
                                                     <input type="hidden" name="action" th:value="loanclosed">
