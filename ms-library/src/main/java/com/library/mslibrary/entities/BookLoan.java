@@ -1,6 +1,5 @@
 package com.library.mslibrary.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.library.mslibrary.enumerated.BookLoanStatusEnum;
 import com.library.mslibrary.utils.DateTools;
 

@@ -1,5 +1,6 @@
 package com.library.msbatch.job;
 
+import com.library.msbatch.service.BookLoanEmailReminderService;
 import com.library.msbatch.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @EnableScheduling
-@EnableAsync
 public class BookLoanEmailReminderJob {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookLoanEmailReminderJob.class);
@@ -19,14 +19,28 @@ public class BookLoanEmailReminderJob {
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    BookLoanEmailReminderService bookLoanEmailReminderService;
+
     @Scheduled(cron="0 0 8 * * ?")
     public void doJob(){
     long t1 = System.currentTimeMillis();
     LOGGER.info("Start Job");
 
-        //emailService.sendSimpleMessage();
+    emailService.sendBookLoanReminderEmail();
 
     long t2 = System.currentTimeMillis();
     LOGGER.info("End Job ({} ms)", t2-t1);
+    }
+
+    @Scheduled(cron="0 0 3 * * ?")
+    public void feedBookLoanEmailReminderRepository(){
+        long t1 = System.currentTimeMillis();
+        LOGGER.info("Start Job");
+
+        bookLoanEmailReminderService.feedBookLoanEmailReminderRepository();
+
+        long t2 = System.currentTimeMillis();
+        LOGGER.info("End Job ({} ms)", t2-t1);
     }
 }

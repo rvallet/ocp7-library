@@ -21,4 +21,10 @@ public class BookLoanEmailReminderController {
         LOGGER.info("Reception d'une demande d'envoi d'email de rappel pour les livres empruntés");
         bookLoanEmailReminderJob.doJob();
     }
+
+    @GetMapping(value = ApiRegistration.FEED_BOOK_LOAN_EMAIL_REMINDER_DB)
+    public void feedBookLoanEmailReminderRepository(){
+        LOGGER.info("Reception d'une demande d'alimentation feedBookLoanEmailReminder en BDD");
+        bookLoanEmailReminderJob.feedBookLoanEmailReminderRepository();
+    }
 }
