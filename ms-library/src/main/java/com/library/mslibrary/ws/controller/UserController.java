@@ -47,12 +47,22 @@ public class UserController {
         return user.get();
     }
 
+    @GetMapping(value= ApiRegistration.REST_GET_USER_BY_ID+ "/{userId}")
+    public User getUserById(@PathVariable Long userId) throws NoSuchResultException {
+        Optional<User> user = Optional.ofNullable(userService.findUserById(userId));
+        return user.get();
+    }
+
     @PostMapping(value = ApiRegistration.REST_SAVE_USER)
     public void saveUser(@RequestBody User user) {
         if (user==null) throw new NoSuchResultException("Demande d'enregistrement utilisateur : ECHEC");
         userService.saveUser(user);
     }
 
+    @GetMapping(value= ApiRegistration.REST_GET_ROLE_LIST)
+    public List<String> getRoleList(){
+        return userService.getRoleList();
+    }
 
 
 }

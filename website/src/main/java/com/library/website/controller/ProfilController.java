@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -104,6 +106,35 @@ public class ProfilController {
         // return findPaginatedUsers(1, model);
         // return findPaginatedBookLoan(1, model);
         return "admin/profil";
+    }
+
+    @GetMapping("/admin/edit-user")
+    public String editUser (
+            @RequestParam(name="id", required = false) Long userId,
+            Model model
+    ) {
+        LOGGER.info("Chargement de la page de modification Utilisateur {}", userId);
+        UserBean user = msLibraryProxy.getUserById(userId);
+
+        List<String> roleList = msLibraryProxy.getRoleList();
+        model.addAttribute("roleList", roleList);
+        model.addAttribute("user", user);
+        return "/admin/edit-user";
+    }
+
+    @PostMapping("/admin/update-user")
+    public String updateUser (
+            @RequestParam(name="id", required = false) Long userId,
+            @RequestParam(name="role", required = false) String role,
+            Model model
+    ) {
+        UserBean user = msLibraryProxy.getUserById(userId);
+        LOGGER.info("Mise à jour de l'utilisateur id {} :\n Role : {} ==> {}", userId, user.getRole(), role);
+        user.setRole(role);
+
+        msLibraryProxy.saveUser(user);
+        model.addAttribute("userList" , msLibraryProxy.getUsers());
+        return "redirect:/admin/profil#nav-users";
     }
 
     @GetMapping("/admin/profil/user/page/{pageNumber}")
