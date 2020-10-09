@@ -36,7 +36,7 @@
                     <a class="nav-item nav-link" id="nav-bookloan-tab"
                        data-toggle="tab" href="#nav-bookloan"
                        role="tab" aria-controls="nav-bookloan"
-                       aria-selected="false">Les Emprunts en cours
+                       aria-selected="false">Les Emprunts
                     </a>
                     <a class="nav-item nav-link" id="nav-history-tab"
                        data-toggle="tab" href="#nav-history"
@@ -48,7 +48,7 @@
 
             <div class="tab-content" id="nav-tabContent">
 
-                <!-- 					Les Utilisateurs -->
+                <!-- Les Utilisateurs -->
                 <div class="tab-pane fade show active" id="nav-users" role="tabpanel" aria-labelledby="nav-profil-tab">
                     <div class="col-md-12" th:if="${usersList!=null and !usersList.isEmpty()}">
                         <br />
@@ -88,8 +88,49 @@
                     </div>
                 </div>
 
-                <!-- 					Les emprunts de Livres en cours -->
+                <!-- Les emprunts de Livres -->
                 <div class="tab-pane fade" id="nav-bookloan" role="tabpanel" aria-labelledby="nav-bookloan-tab">
+                    <br />
+                    <div class="col-md-12">
+                        <button class="btn btn-outline-default btn-lg btn-block" type="button" data-toggle="collapse" data-target="#addLoan" aria-expanded="false" aria-controls="addLoan">
+						    <span class="collapsed">
+						        Ajouter un emprunt
+                            </span>
+                            <span class="expanded">
+							    Replier
+							</span>
+                        </button>
+                        <div class="collapse" id="addLoan">
+                            <!-- Ajouter un Emprunt -->
+                            <div class="container text-center">
+                                <br />
+                                <form th:action="@{admin/create-bookLoan}" method="get">
+                                    <p class="error-message" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error</p>
+                                    <div class="form-group row">
+                                        <label for="email" class="col-sm-2 col-form-label">
+                                            eMail de l'utilisateur
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="email" th:value="${email}" th:field="${email}" placeholder="Email de l'itilisateur" autofocus="autofocus" required>
+                                            <p class="error-message" th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="isbn" class="col-sm-2 col-form-label">
+                                            Référence ISBN
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="isbn" th:value="${isbn}" th:field="${isbn}" placeholder="Référence ISBN" required>
+                                            <p class="error-message" th:each="error : ${#fields.errors('isbn')}" th:text="${error}">Validation error</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-success" type="submit">
+                                        Valider
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12" th:if="${bookLoanList==null or bookLoanList.isEmpty()}">
                         <br />
                         <h3>Les Emprunts</h3>
@@ -153,7 +194,7 @@
                     </div>
                 </div>
 
-                <!-- 					Historique -->
+                <!-- Historique -->
                 <div class="tab-pane fade" id="nav-history" role="tabpanel" aria-labelledby="nav-history-tab">
                     <div class="col-md-12" th:if="${bookLoanList==null or bookLoanList.isEmpty()}">
                         <br />
@@ -209,6 +250,18 @@
     </section>
 </main>
 <th:block th:insert="base :: footer">...</th:block>
-<th:block th:insert="base :: script">...</th:block>
+<!-- jQuery (min) -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<!-- OC_Library -->
+<script type="text/javascript" th:src="@{js/oc_library.js}"></script>
 </body>
 </html>

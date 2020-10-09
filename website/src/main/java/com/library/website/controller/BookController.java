@@ -61,4 +61,23 @@ public class BookController {
         model.addAttribute("searchCriteriaList", searchCriteriaList );
         return "livres";
     }
+
+    @GetMapping("/livre")
+    public String displayBook(
+            Model model,
+            @RequestParam(name = "id_book", required = false) Long bookId
+    ) {
+        if (bookId == null) {
+            return "livres";
+        }
+
+        LOGGER.info("Envoi d'une demande de livre id_book={}", bookId);
+        BookBean book = msLibraryProxy.getBookById(bookId);
+        if (book == null) {
+            return "livres";
+        }
+
+        model.addAttribute("book", book);
+        return "livre";
+    }
 }

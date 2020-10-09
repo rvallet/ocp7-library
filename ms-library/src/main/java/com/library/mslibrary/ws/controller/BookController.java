@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -37,6 +38,24 @@ public class BookController {
     @GetMapping(value= ApiRegistration.REST_GET_SEARCH_CRITERIA_LIST)
     public List<String> getSearchCriteriaList(){
         return bookService.getSearchCriteriaList();
+    }
+
+    @GetMapping(value= ApiRegistration.REST_GET_BOOK_BY_ID + "/{bookId}")
+    public Book getBookById(@PathVariable Long bookId) throws NoSuchResultException {
+        LOGGER.debug("getting Book from BookService");
+        Book book = bookService.findBookById(bookId);
+        LOGGER.info("Envoi du livre id {}", bookId);
+        if (book == null) throw new NoSuchResultException("Aucun Livre");
+        return book;
+    }
+
+    @GetMapping(value= ApiRegistration.REST_BOOK_BY_ISBN + "/{isbn}")
+    public Book getBookByIsbn(@PathVariable String isbn) throws NoSuchResultException {
+        LOGGER.debug("getting Book from BookService");
+        Book book = bookService.findBookByIsbn(isbn);
+        LOGGER.info("Envoi du livre id {} (isbn : {})", book.getId(), isbn);
+        if (book == null) throw new NoSuchResultException("Aucun Livre");
+        return book;
     }
 
 }

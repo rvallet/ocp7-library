@@ -14,5 +14,6 @@ public interface UserService {
     User saveUser(User user);
     List<User> saveAll(List<User> userList);
     Page<User> findPaginatedUsers(int pageNumber, int pageSize);
+    List<String> getRoleList ();
 
 }

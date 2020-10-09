@@ -2,7 +2,6 @@
 <html lang="fr"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="~{base}">
 
@@ -19,9 +18,24 @@
             <div class="col-md-12">
             <h1>Consulter et emprunter des livres</h1>
 
-            <!-- 					Basic Search Criteria			 -->
+            <!-- Search Area	-->
             <H2>Rechercher un livre</H2>
             <form th:action="@{livres}" method="get">
+                <!-- Basic Search Criteria	-->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text">Critère de recherche</label>
+                    </div>
+                    <select class="form-control" id="searchCriteria" name="searchCriteria" th:value="${criteria}" required>
+                        <option value=""> -Sélectionner un des critères de recherche- </option>
+                        <option th:each="criteria : ${searchCriteriaList}"
+                                th:value="${criteria}"
+                                th:utext="${criteria}"
+                                th:selected="${criteria}==${searchCriteria}"/>
+                    </select>
+                </div>
+
+                <!-- Basic Search Request	-->
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <button class="btn btn-outline-secondary">Filtrer</button>
@@ -33,60 +47,108 @@
                         </button>
                     </div>
                 </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text">Critère de recherche</label>
-                    </div>
-                    <select class="form-control" id="searchCriteria" name="searchCriteria" th:value="${criteria}" required>
-                        <option value=""> -Sélectionner un critère de recherche- </option>
-                        <option th:each="criteria : ${searchCriteriaList}"
-                                th:value="${criteria}"
-                                th:utext="${criteria}"
-                                th:selected="${criteria}==${searchCriteria}"/>
-                    </select>
-                </div>
             </form>
-                <!-- 					Les Livres			 -->
+
+                <!-- No Result for BookList -->
             <div th:if="${bookList==null or bookList.isEmpty()}">
                 <br />
                 <h3>Nos livres</h3>
                 Aucun résultat
             </div>
-            <div th:if="${bookList!=null and !bookList.isEmpty()}">
-                <br />
-                <h3>Nos livres</h3>
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Titre</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Auteur</th>
-                            <th scope="col">Collection</th>
-                            <th scope="col">Parution</th>
-                            <th scope="col">Disponibilité</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="book:${bookList}" th:if="${book.getOnline()}">
-                            <th scope="row"><span th:text="${book.title}">Titre</span></th>
-                            <td><span th:text="${book.description}">Description</span></td>
-                            <td><span th:text="${book.author}">Auteur</span></td>
-                            <td><span th:text="${book.collection}">Collection</span></td>
-                            <td><span th:text="${#dates.format(book.releaseDate, 'dd/MM/yyyy')}">Parution</span></td>
-                            <td>
-                                <div class="text-center">
-                                    <span th:text="${book.getLoanAvailable()} ? '✔ Oui' : '❌ Non'">Disponibilité</span>
-                                    <div th:if="${book.getLoanAvailable()}">
-                                        <span th:text="${book.getStock()}">Stock</span>
+
+                <!-- Book List	(Table) -->
+                <!--<div th:if="${bookList!=null and !bookList.isEmpty()}">
+                    <br />
+                    <h3>Nos livres</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Titre</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Auteur</th>
+                                <th scope="col">Collection</th>
+                                <th scope="col">Parution</th>
+                                <th scope="col">Disponibilité</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="book:${bookList}" th:if="${book.getOnline()}">
+                                <th scope="row"><span th:text="${book.title}">Titre</span></th>
+                                <td><span th:text="${book.description}">Description</span></td>
+                                <td><span th:text="${book.author}">Auteur</span></td>
+                                <td><span th:text="${book.collection}">Collection</span></td>
+                                <td><span th:text="${#dates.format(book.releaseDate, 'dd/MM/yyyy')}">Parution</span></td>
+                                <td>
+                                    <div class="text-center">
+                                        &lt;!&ndash;                                    <span th:text="${book.getLoanAvailable()} ? '✔ Oui' : '❌ Non'">Disponibilité</span>&ndash;&gt;
+                                        <button type="button" th:if="${book.getLoanAvailable()}" th:disabled="${!book.getLoanAvailable()}" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#bookModalCenter" th:attr="data-target='#bookModalCenter'+${book?.id}">
+                                            En savoir plus
+                                        </button>
+                                        <button type="button" th:if="${!book.getLoanAvailable()}" th:disabled="${!book.getLoanAvailable()}" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#bookModalCenter" th:attr="data-target='#bookModalCenter'+${book?.id}">
+                                            Indisponible
+                                        </button>
+                                        <div th:if="${book.getLoanAvailable()}">
+                                            <span th:text="'Nb Exemplaires : ' + ${book.getStock()}">Stock</span>
+                                        </div>
                                     </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>-->
+
+                <!-- Book List (Cards) -->
+                <div th:if="${bookList!=null and !bookList.isEmpty()}">
+                    <br />
+                    <h3>Nos livres</h3>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6">
+                        <div class="col mb-4" id="bookList" th:each="book:${bookList}" th:if="${book.getOnline()}">
+                            <div class="card">
+                                <img th:if="${book.imgPathThAttribute == null}" class="card-img-top img-fluid" th:src="@{/img/book/default-book-cover_200x200.jpg}" th:alt="${book.title}" alt="">
+                                <img th:if="${book.imgPathThAttribute != null}" class="card-img-top" th:src="@{${book.imgPathThAttribute}}" th:alt="${book.title}" alt="">
+                                <div class="card-body">
+                                    <div class="card-header">
+                                        <p class="card-title text-center" th:text="${book.title}">Titre</p>
+                                    </div>
+                                    <p class="card-text" th:text="${book.shortDescription}">Description</p>
+                                    <p class="text-muted"> Auteur : <span th:text="${book.author}">Auteur</span></p>
+                                    <p class="card-text text-right"><small class="text-muted" th:text="'Publié le ' + ${#dates.format(book.releaseDate, 'dd/MM/yyyy')}">Date de publication</small></p>
                                 </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                <div class="card-footer">
+                                    <p class="card-text"><small class="text-muted" th:text="'Nb Exemplaire : ' + ${book.stock}">Stock</small></p>
+                                    <form th:action="@{livre}" method="get">
+                                        <input type="hidden" name="id_book" th:value="${book.id}"/>
+                                        <button type="submit" th:if="${book.getLoanAvailable()}" th:disabled="${!book.getLoanAvailable()}" class="btn btn-secondary btn-block">En savoir plus</button>
+                                    </form>
+                                    <button type="button" th:if="${!book.getLoanAvailable()}" th:disabled="${!book.getLoanAvailable()}" class="btn btn-secondary btn-block">
+                                        Indisponible
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="w-100">
+                                <!-- wrap every -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Pagination -->
+                <br />
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">&lt;&lt;</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">&gt;&gt;</a>
+                        </li>
+                    </ul>
+                </nav>
 
             </div>
         </div>

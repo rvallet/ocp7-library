@@ -27,20 +27,27 @@ public class EmailConfig {
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.user", "OCP7.msbatch@gmail.com");
+        props.put("mail.smtp.password","wbkpmlynrqmyjlug");
+        props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.debug", "true");
 
         return mailSender;
     }
 
     @Bean
-    public SimpleMailMessage templateSimpleMessage() {
+    public SimpleMailMessage template() {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo("OCP7.msbatch@gmail.com");
         message.setFrom("OCP7.msbatch@gmail.com");
         message.setText(
-                "This is the test email template for your email:\n%s\n");
+                "Bonjour :" +
+                        "\n%s" +
+                        "\n");
         return message;
     }
 
