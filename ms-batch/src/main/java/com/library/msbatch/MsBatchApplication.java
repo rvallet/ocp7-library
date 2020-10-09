@@ -15,7 +15,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.mail.SimpleMailMessage;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages="com.library")
 @EnableConfigurationProperties
 @EnableDiscoveryClient
 @EnableFeignClients("com.library.msbatch")

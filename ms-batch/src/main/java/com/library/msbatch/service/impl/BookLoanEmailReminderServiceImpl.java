@@ -9,7 +9,9 @@ import com.library.msbatch.utils.DateTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +22,9 @@ public class BookLoanEmailReminderServiceImpl implements BookLoanEmailReminderSe
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookLoanEmailReminderServiceImpl.class);
 
-/*    @Autowired
-    MicroServiceLibraryProxy msLibraryProxy;*/
+    //TODO: review proxy ms-library
+    //@Autowired
+    private MicroServiceLibraryProxy msLibraryProxy;
 
     @Autowired
     BookLoanEmailReminderRepository bookLoanEmailReminderRepository;
@@ -29,33 +32,35 @@ public class BookLoanEmailReminderServiceImpl implements BookLoanEmailReminderSe
     @Override
     public List<BookLoanBean> getBookLoansList() {
         LOGGER.info("Récupération de la liste des emprunts de livres");
-        return null;//msLibraryProxy.getBookLoansList();
+        return msLibraryProxy.getBookLoansList();
     }
 
     @Override
     public void feedBookLoanEmailReminderRepository() {
         List<BookLoanEmailReminder> result = new ArrayList<>();
 
-        List<BookLoanBean> bookLoanBeanList = null;//msLibraryProxy.getBookLoansList();
-        LOGGER.debug("Get bookLoanList : {}", bookLoanBeanList.size());
+        List<BookLoanBean> bookLoanBeanList = msLibraryProxy.getBookLoansList();
+        if (bookLoanBeanList !=null && !bookLoanBeanList.isEmpty()) {
+            LOGGER.debug("Get bookLoanList : {}", bookLoanBeanList.size());
 
-        // Conserve uniquement les emprunts dont l'échéance est la veille
-        bookLoanBeanList.stream().filter(b -> b.getEndLoan().equals(DateTools.yesterday())).collect(Collectors.toList());
-        LOGGER.debug("Filter bookLoanList : {}", bookLoanBeanList.size());
+            // Conserve uniquement les emprunts dont l'échéance est la veille
+            bookLoanBeanList.stream().filter(b -> b.getEndLoan().equals(DateTools.yesterday())).collect(Collectors.toList());
+            LOGGER.debug("Filter bookLoanList : {}", bookLoanBeanList.size());
 
-        for (BookLoanBean bookLoan : bookLoanBeanList) {
-            result.add(new BookLoanEmailReminder(
-                    bookLoan.getUser().getId(),
-                    bookLoan.getUser().getEmail(),
-                    bookLoan.getUser().getLastName(),
-                    bookLoan.getUser().getFirstName(),
-                    bookLoan.getBook().getId(),
-                    bookLoan.getBook().getTitle(),
-                    bookLoan.getId(),
-                    bookLoan.getEndLoan()
-            ));
+            for (BookLoanBean bookLoan : bookLoanBeanList) {
+                result.add(new BookLoanEmailReminder(
+                        bookLoan.getUser().getId(),
+                        bookLoan.getUser().getEmail(),
+                        bookLoan.getUser().getLastName(),
+                        bookLoan.getUser().getFirstName(),
+                        bookLoan.getBook().getId(),
+                        bookLoan.getBook().getTitle(),
+                        bookLoan.getId(),
+                        bookLoan.getEndLoan()
+                ));
+            }
+            saveBookLoanEmailReminderList(result);
         }
-        saveBookLoanEmailReminderList(result);
     }
 
     @Override
