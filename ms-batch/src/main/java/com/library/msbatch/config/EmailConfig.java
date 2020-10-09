@@ -35,12 +35,14 @@ public class EmailConfig {
     }
 
     @Bean
-    public SimpleMailMessage templateSimpleMessage() {
+    public SimpleMailMessage template() {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo("OCP7.msbatch@gmail.com");
         message.setFrom("OCP7.msbatch@gmail.com");
         message.setText(
-                "This is the test email template for your email:\n%s\n");
+                "Bonjour :" +
+                        "\n%s" +
+                        "\n");
         return message;
     }
 
