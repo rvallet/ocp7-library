@@ -9,6 +9,8 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, String> {
 
     List<Book> findAll();
+
+    @Query("SELECT book from Book book WHERE book.id = :id")
     Book findBookById(Long id);
 
     @Query("SELECT books from Book books WHERE books.title LIKE CONCAT ('%',:bookTitle,'%')")

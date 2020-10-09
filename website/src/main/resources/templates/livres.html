@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <p class="card-text"><small class="text-muted" th:text="'Nb Exemplaire : ' + ${book.stock}">Stock</small></p>
-                                    <form th:action="@{book}" method="get">
+                                    <form th:action="@{livre}" method="get">
                                         <input type="hidden" name="id_book" th:value="${book.id}"/>
                                         <button type="submit" th:if="${book.getLoanAvailable()}" th:disabled="${!book.getLoanAvailable()}" class="btn btn-secondary btn-block">En savoir plus</button>
                                     </form>
