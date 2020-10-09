@@ -4,14 +4,13 @@ import com.library.mslibrary.api.ApiRegistration;
 import com.library.mslibrary.config.ApplicationPropertiesConfig;
 import com.library.mslibrary.entities.Book;
 import com.library.mslibrary.entities.BookLoan;
+import com.library.mslibrary.entities.User;
 import com.library.mslibrary.service.BookLoanService;
 import com.library.mslibrary.ws.exception.NoSuchResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -64,6 +63,12 @@ public class BookLoanController {
         BookLoan bl = bookLoanService.findBookLoanById(bookLoanId);
         LOGGER.info("Recherche de l'emprunt bookLoanId = {}", bookLoanId);
         return bl;
+    }
+
+    @GetMapping(value= ApiRegistration.REST_SAVE_BOOK_LOAN)
+    public void saveBookLoan(@RequestBody BookLoan bookLoan) {
+        if (bookLoan==null) throw new NoSuchResultException("Demande d'enregistrement utilisateur : ECHEC");
+        bookLoanService.saveBookLoan(bookLoan);
     }
 
 }

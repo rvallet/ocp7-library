@@ -24,11 +24,14 @@ public interface MicroServiceLibraryProxy {
     @GetMapping(value= "/booksList")
     List<BookBean> getBookList();
 
-    @GetMapping(value= "/user/{id}")
-    UserBean getUserById(@PathVariable String id);
+    @GetMapping(value= "/getBookByIsbn/{isbn}")
+    BookBean getBookByIsbn(@PathVariable String isbn);
 
-    @GetMapping(value= "/book/{id}")
-    BookBean getBookById(@PathVariable String id);
+    @GetMapping(value= "/getUserById/{id}")
+    UserBean getUserById(@PathVariable Long id);
+
+    @GetMapping(value= "/findBookById/{id}")
+    BookBean getBookById(@PathVariable Long id);
 
     @GetMapping(value= "/bookLoan/{bookLoanId}")
     BookLoanBean getBookLoanById(@PathVariable Long bookLoanId);
@@ -62,4 +65,7 @@ public interface MicroServiceLibraryProxy {
 
     @GetMapping(value="/getSearchCriteriaList")
     List<String> getSearchCriteriaList();
+
+    @GetMapping(value="/getRoleList")
+    List<String> getRoleList();
 }

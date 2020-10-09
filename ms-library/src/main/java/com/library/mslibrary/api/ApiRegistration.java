@@ -10,11 +10,17 @@ public interface ApiRegistration {
 
     String REST_GET_USER_BY_EMAIL = "/findUserByEmail";
 
+    String REST_GET_USER_BY_ID = "/getUserById";
+
     String REST_SAVE_USER = "/saveUser";
+
+    String REST_SAVE_BOOK_LOAN = "/saveBookLoan";
 
     String REST_BOOKS_LIST = "/booksList";
 
     String REST_BOOK_BY_ID = "/findBookById";
+
+    String REST_BOOK_BY_ISBN ="/getBookByIsbn";
 
     String REST_BOOK_LOANS_LIST = "/getBookLoansList";
 
@@ -33,4 +39,6 @@ public interface ApiRegistration {
     String REST_GET_BOOK_LOAN_BY_ID = "/bookLoan";
 
     String REST_GET_SEARCH_CRITERIA_LIST = "/getSearchCriteriaList";
+
+    String REST_GET_ROLE_LIST ="/getRoleList";
 }

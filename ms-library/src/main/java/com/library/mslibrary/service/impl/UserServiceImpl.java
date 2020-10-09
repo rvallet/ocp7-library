@@ -1,6 +1,8 @@
 package com.library.mslibrary.service.impl;
 
 import com.library.mslibrary.entities.User;
+import com.library.mslibrary.enumerated.SearchCriteriaEnum;
+import com.library.mslibrary.enumerated.UserRoleEnum;
 import com.library.mslibrary.repository.UserRepository;
 import com.library.mslibrary.service.UserService;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,7 +55,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<User> findPaginatedUsers(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber-1, pageSize);
-        return this.userRepository.findAll(pageable);
+        return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<String> getRoleList() {
+        List<String> result = new ArrayList<>();
+        for (UserRoleEnum role : UserRoleEnum.values()) {
+            result.add(role.toString());
+        }
+        LOGGER.info("Envoi d'une liste de {} critères de recherche", result.size());
+        return result;
     }
 
 }
