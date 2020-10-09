@@ -1,5 +1,6 @@
 package com.library.website.controller;
 
+import com.library.website.beans.BookBean;
 import com.library.website.beans.BookLoanBean;
 import com.library.website.beans.UserBean;
 import com.library.website.proxies.MicroServiceLibraryProxy;
@@ -10,12 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -103,8 +105,22 @@ public class ProfilController {
         model.addAttribute("bookLoanList", bookLoanList);
         LOGGER.info("Chargement de {} emprunts", bookLoanList.size());
 
+/*        UserBean newUser = new UserBean();
+        BookBean newBook = new BookBean();
+        BookLoanBean newBookLoan = new BookLoanBean();
+        newBookLoan.setBook(newBook);
+        newBookLoan.setUser(newUser);
+
+        model.addAttribute("newBookLoan", newBookLoan);
+        model.addAttribute("newUser", newUser);
+        model.addAttribute("newBook", newBook);*/
         // return findPaginatedUsers(1, model);
         // return findPaginatedBookLoan(1, model);
+        String email = "";
+        String isbn = "";
+
+        model.addAttribute("email", email);
+        model.addAttribute("isbn", isbn);
         return "admin/profil";
     }
 
@@ -135,6 +151,41 @@ public class ProfilController {
         msLibraryProxy.saveUser(user);
         model.addAttribute("userList" , msLibraryProxy.getUsers());
         return "redirect:/admin/profil#nav-users";
+    }
+
+    @GetMapping("/admin/create-bookLoan")
+    public String createBookLoan (
+        @RequestParam(name="email", required = true) String userEmail,
+        @RequestParam(name="isbn", required = true) String isbn,
+        Model model
+    ){
+
+        UserBean user = msLibraryProxy.getUserByEmail(userEmail);
+        BookBean book = msLibraryProxy.getBookByIsbn(isbn);
+
+        if (user == null) {
+            //ObjectError error1 = new ObjectError("email", "Aucun utilisateur trouvé");
+            //result.addError(error1);
+            return "redirect:/admin/profil#nav-bookloan";
+        }
+
+        if (book == null) {
+            //ObjectError error2 = new ObjectError("isbn", "Aucun livre trouvé");
+            //result.addError(error2);
+            return "redirect:/admin/profil#nav-bookloan";
+        }
+
+        if (book != null && user != null) {
+            BookLoanBean bookLoan = new BookLoanBean();
+            bookLoan.setUser(user);
+            bookLoan.setBook(book);
+            bookLoan.setStartLoan(new Date());
+
+            msLibraryProxy.saveBookLoan(bookLoan);
+
+        }
+
+        return "redirect:/admin/profil#nav-bookloan";
     }
 
     @GetMapping("/admin/profil/user/page/{pageNumber}")

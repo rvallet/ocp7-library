@@ -22,8 +22,7 @@ public class BookLoanEmailReminderServiceImpl implements BookLoanEmailReminderSe
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookLoanEmailReminderServiceImpl.class);
 
-    //TODO: review proxy ms-library
-    //@Autowired
+    @Autowired
     private MicroServiceLibraryProxy msLibraryProxy;
 
     @Autowired

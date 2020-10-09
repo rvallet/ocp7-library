@@ -24,6 +24,9 @@ public interface MicroServiceLibraryProxy {
     @GetMapping(value= "/booksList")
     List<BookBean> getBookList();
 
+    @GetMapping(value= "/getBookByIsbn/{isbn}")
+    BookBean getBookByIsbn(@PathVariable String isbn);
+
     @GetMapping(value= "/getUserById/{id}")
     UserBean getUserById(@PathVariable Long id);
 

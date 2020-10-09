@@ -27,8 +27,13 @@ public class EmailConfig {
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.user", "OCP7.msbatch@gmail.com");
+        props.put("mail.smtp.password","wbkpmlynrqmyjlug");
+        props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.debug", "true");
 
         return mailSender;

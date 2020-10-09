@@ -53,6 +53,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendBookLoanReminderEmail() {
         List<BookLoanEmailReminder> bookLoanEmailReminderList = bookLoanEmailReminderService.findBookLoanEmailRemindersByIsEmailSentIsNot(true);
+        LOGGER.debug("bookLoanEmailReminderList = {} (filter = {})", bookLoanEmailReminderList.size(), "true");
         if (!bookLoanEmailReminderList.isEmpty()) {
             for (BookLoanEmailReminder bookLoanEmailReminder : bookLoanEmailReminderList) {
                 String text = String.format(template.getText(), emailConfig.template(), "<h1>Coucou</h1>" +bookLoanEmailReminder.getUserEmail());

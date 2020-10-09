@@ -49,4 +49,13 @@ public class BookController {
         return book;
     }
 
+    @GetMapping(value= ApiRegistration.REST_BOOK_BY_ISBN + "/{isbn}")
+    public Book getBookByIsbn(@PathVariable String isbn) throws NoSuchResultException {
+        LOGGER.debug("getting Book from BookService");
+        Book book = bookService.findBookByIsbn(isbn);
+        LOGGER.info("Envoi du livre id {} (isbn : {})", book.getId(), isbn);
+        if (book == null) throw new NoSuchResultException("Aucun Livre");
+        return book;
+    }
+
 }
