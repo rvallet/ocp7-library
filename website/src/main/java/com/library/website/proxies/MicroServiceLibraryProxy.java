@@ -57,6 +57,9 @@ public interface MicroServiceLibraryProxy {
     @PostMapping(value = "/saveBookLoan")
     BookLoanBean saveBookLoan(@RequestBody BookLoanBean bookLoanBean);
 
+    @PostMapping(value = "/createBookLoan")
+    BookLoanBean createBookLoan(@RequestBody BookLoanBean bookLoanBean);
+
     @GetMapping(value = "/extendBookLoan/{bookLoanId}")
     BookLoanBean extendBookLoan(@PathVariable Long bookLoanId);
 

@@ -153,7 +153,7 @@ public class ProfilController {
         return "redirect:/admin/profil#nav-users";
     }
 
-    @GetMapping("/admin/create-bookLoan")
+    @PostMapping("/admin/create-bookLoan")
     public String createBookLoan (
         @RequestParam(name="email", required = true) String userEmail,
         @RequestParam(name="isbn", required = true) String isbn,
@@ -179,10 +179,8 @@ public class ProfilController {
             BookLoanBean bookLoan = new BookLoanBean();
             bookLoan.setUser(user);
             bookLoan.setBook(book);
-            bookLoan.setStartLoan(new Date());
-
-            msLibraryProxy.saveBookLoan(bookLoan);
-
+            LOGGER.info("Envoie d'un enregistrement de création d'emprunt du livre {} pour l'utilisateur {}", book.getTitle(), user.getEmail());
+            msLibraryProxy.createBookLoan(bookLoan);
         }
 
         return "redirect:/admin/profil#nav-bookloan";
