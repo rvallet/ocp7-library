@@ -72,13 +72,13 @@ public class BookLoanController {
 
     @PostMapping(value= ApiRegistration.REST_SAVE_BOOK_LOAN)
     public void saveBookLoan(@RequestBody BookLoan bookLoan) {
-        if (bookLoan==null) throw new NoSuchResultException("Demande d'enregistrement utilisateur : ECHEC");
+        if (bookLoan==null) throw new NoSuchResultException("Demande d'enregistrement d'emprunt : ECHEC");
         bookLoanService.saveBookLoan(bookLoan);
     }
 
     @PostMapping(value= ApiRegistration.REST_CREATE_BOOK_LOAN)
     public void createBookLoan(@RequestBody BookLoan bookLoan) {
-        if (bookLoan==null) throw new NoSuchResultException("Demande d'enregistrement utilisateur : ECHEC");
+        if (bookLoan==null || bookLoan.getBook()==null || bookLoan.getUser()==null) throw new NoSuchResultException("Demande d'enregistrement d'emprunt : ECHEC");
         BookLoan bookLoanToCreate = new BookLoan(bookLoan.getUser(), bookLoan.getBook(), appConfig.getBookLoanDuration());
         bookLoanService.saveBookLoan(bookLoanToCreate);
     }

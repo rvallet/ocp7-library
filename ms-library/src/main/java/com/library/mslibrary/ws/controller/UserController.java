@@ -44,13 +44,13 @@ public class UserController {
     @GetMapping(value= ApiRegistration.REST_GET_USER_BY_EMAIL + "/{email}")
     public User getUserByEmail(@PathVariable String email) throws NoSuchResultException {
         Optional<User> user = Optional.ofNullable(userService.findUserByEmail(email));
-        return user.get();
+        return user.isPresent() ? user.get() : null;
     }
 
     @GetMapping(value= ApiRegistration.REST_GET_USER_BY_ID+ "/{userId}")
     public User getUserById(@PathVariable Long userId) throws NoSuchResultException {
         Optional<User> user = Optional.ofNullable(userService.findUserById(userId));
-        return user.get();
+        return user.isPresent() ? user.get() : null;
     }
 
     @PostMapping(value = ApiRegistration.REST_SAVE_USER)

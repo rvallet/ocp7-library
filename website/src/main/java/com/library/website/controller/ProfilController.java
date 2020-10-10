@@ -105,22 +105,15 @@ public class ProfilController {
         model.addAttribute("bookLoanList", bookLoanList);
         LOGGER.info("Chargement de {} emprunts", bookLoanList.size());
 
-/*        UserBean newUser = new UserBean();
-        BookBean newBook = new BookBean();
-        BookLoanBean newBookLoan = new BookLoanBean();
-        newBookLoan.setBook(newBook);
-        newBookLoan.setUser(newUser);
-
-        model.addAttribute("newBookLoan", newBookLoan);
-        model.addAttribute("newUser", newUser);
-        model.addAttribute("newBook", newBook);*/
-        // return findPaginatedUsers(1, model);
-        // return findPaginatedBookLoan(1, model);
         String email = "";
         String isbn = "";
+        String errorUser = "";
+        String errorBook = "";
 
         model.addAttribute("email", email);
         model.addAttribute("isbn", isbn);
+        model.addAttribute("errorUser", errorUser);
+        model.addAttribute("errorBook", errorBook);
         return "admin/profil";
     }
 
@@ -155,32 +148,33 @@ public class ProfilController {
 
     @PostMapping("/admin/create-bookLoan")
     public String createBookLoan (
-        @RequestParam(name="email", required = true) String userEmail,
-        @RequestParam(name="isbn", required = true) String isbn,
+        @RequestParam(name="email") String userEmail,
+        @RequestParam(name="isbn") String isbn,
         Model model
     ){
-
         UserBean user = msLibraryProxy.getUserByEmail(userEmail);
         BookBean book = msLibraryProxy.getBookByIsbn(isbn);
 
         if (user == null) {
-            //ObjectError error1 = new ObjectError("email", "Aucun utilisateur trouvé");
-            //result.addError(error1);
+            String errorUser = "Aucun utilisateur trouvé avec l'adresse : "+userEmail;
+            model.addAttribute("errorUser", errorUser);
+            LOGGER.info(errorUser);
             return "redirect:/admin/profil#nav-bookloan";
         }
 
         if (book == null) {
-            //ObjectError error2 = new ObjectError("isbn", "Aucun livre trouvé");
-            //result.addError(error2);
+            String errorBook = "Aucun livre trouvé avec l'ISBN "+isbn;
+            model.addAttribute("errorBook", errorBook);
+            LOGGER.info(errorBook);
             return "redirect:/admin/profil#nav-bookloan";
         }
 
         if (book != null && user != null) {
-            BookLoanBean bookLoan = new BookLoanBean();
-            bookLoan.setUser(user);
-            bookLoan.setBook(book);
             LOGGER.info("Envoie d'un enregistrement de création d'emprunt du livre {} pour l'utilisateur {}", book.getTitle(), user.getEmail());
-            msLibraryProxy.createBookLoan(bookLoan);
+            BookLoanBean bookLoanBean = new BookLoanBean();
+            bookLoanBean.setUser(user);
+            bookLoanBean.setBook(book);
+            msLibraryProxy.createBookLoan(bookLoanBean);
         }
 
         return "redirect:/admin/profil#nav-bookloan";

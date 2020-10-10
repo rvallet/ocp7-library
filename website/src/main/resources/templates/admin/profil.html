@@ -2,7 +2,6 @@
 <html lang="fr"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="~{base}">
 
@@ -12,7 +11,7 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{/css/style.css}"/>
     <link rel="icon" href="img/icon.png" th:href="@{img/icon.png}" />
     <link rel="shortcut icon" href="img/favicon.ico"th:href="@{img/favicon.ico}" />
     <base href="/">
@@ -105,14 +104,13 @@
                             <div class="container text-center">
                                 <br />
                                 <form th:action="@{admin/create-bookLoan}" method="post">
-                                    <p class="error-message" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error</p>
                                     <div class="form-group row">
                                         <label for="email" class="col-sm-2 col-form-label">
                                             eMail de l'utilisateur
                                         </label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="email" th:name="email" placeholder="Email de l'itilisateur" autofocus="autofocus" required>
-                                            <p class="error-message" th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</p>
+                                            <input type="text" class="form-control" id="email" th:name="email" placeholder="Email de l'utilisateur" autofocus="autofocus" required>
+                                            <p class="error-message" th:if="${!#strings.isEmpty(errorUser)}" th:text="${errorUser}">Validation error</p>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -121,7 +119,7 @@
                                         </label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="isbn" th:name="isbn" placeholder="Référence ISBN" required>
-                                            <p class="error-message" th:each="error : ${#fields.errors('isbn')}" th:text="${error}">Validation error</p>
+                                            <p class="error-message" th:if="${!#strings.isEmpty(errorBook)}" th:text="${errorBook}">Validation error</p>
                                         </div>
                                     </div>
                                     <button class="btn btn-success" type="submit">
@@ -250,18 +248,6 @@
     </section>
 </main>
 <th:block th:insert="base :: footer">...</th:block>
-<!-- jQuery (min) -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-<!-- OC_Library -->
-<script type="text/javascript" th:src="@{js/oc_library.js}"></script>
+<th:block th:insert="base :: script">...</th:block>
 </body>
 </html>
