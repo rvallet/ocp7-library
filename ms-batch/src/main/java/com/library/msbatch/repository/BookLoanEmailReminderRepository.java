@@ -11,7 +11,10 @@ public interface BookLoanEmailReminderRepository extends JpaRepository<BookLoanE
     List<BookLoanEmailReminder> findAll();
     BookLoanEmailReminder findBookLoanEmailReminderById(Long id);
 
-    //@Query("SELECT bl FROM BookLoanEmailReminder bl WHERE bl.isEmailSent != :emailSent")
+    /*
+    SELECT * FROM library_bdd.book_loan_email_reminder
+    WHERE is_email_sent NOT IN (TRUE)*/
+    @Query("SELECT bl FROM BookLoanEmailReminder bl WHERE bl.isEmailSent NOT IN (:isEmailSent)")
     List<BookLoanEmailReminder> findBookLoanEmailRemindersByIsEmailSentIsNot(Boolean isEmailSent);
 
     List<BookLoanEmailReminder> findBookLoanEmailRemindersByBookId(Long bookId);

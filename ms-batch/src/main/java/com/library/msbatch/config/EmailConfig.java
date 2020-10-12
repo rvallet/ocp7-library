@@ -1,5 +1,6 @@
 package com.library.msbatch.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -16,26 +17,25 @@ import java.util.Properties;
 @Configuration
 public class EmailConfig {
 
-    @Bean
-    public JavaMailSender getJavaMailSender() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+    @Autowired
+    MailProperties mailProperties;
 
-        mailSender.setUsername("OCP7.msbatch@gmail.com");
-        mailSender.setPassword("wbkpmlynrqmyjlug"); // PW_Compte = msbatch.OCP7
+    @Bean
+    public JavaMailSender getMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
+        mailSender.setHost(mailProperties.getHost());
+        mailSender.setPort(mailProperties.getPort());
+        mailSender.setUsername(mailProperties.getUsername());
+        mailSender.setPassword(mailProperties.getPassword()); // PW_Compte = msbatch.OCP7
 
         Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.user", "OCP7.msbatch@gmail.com");
-        props.put("mail.smtp.password","wbkpmlynrqmyjlug");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.ssl.enable", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.transport.protocol", "smtp");
         props.put("mail.debug", "true");
 
+        mailSender.setJavaMailProperties(props);
         return mailSender;
     }
 
@@ -47,7 +47,9 @@ public class EmailConfig {
         message.setText(
                 "Bonjour :" +
                         "\n%s" +
-                        "\n");
+                        "\n%s" +
+                        "\n%s" +
+                        "\n%s" );
         return message;
     }
 

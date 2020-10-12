@@ -24,6 +24,10 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
 
 		<!-- Starter debug des MS (dépendance de Spring Boot Admin) -->
 		<dependency>
@@ -67,10 +71,10 @@
 		</dependency>
 
 		<!-- Starter load-balancer -->
-		<!--		<dependency>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-                </dependency>-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
+		</dependency>
 
 		<!-- Starter Zuul -->
 		<!--		<dependency>
@@ -116,12 +120,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
-<!--		<dependency>
-			<groupId>io.github.openfeign</groupId>
-			<artifactId>feign-core</artifactId>
-			<version>9.5.1</version>
-			<scope>compile</scope>
-		</dependency>-->
 
 		<dependency>
 			<groupId>mysql</groupId>

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,13 +41,17 @@ public class BookLoanEmailReminderServiceImpl implements BookLoanEmailReminderSe
 
         List<BookLoanBean> bookLoanBeanList = msLibraryProxy.getBookLoansList();
         if (bookLoanBeanList !=null && !bookLoanBeanList.isEmpty()) {
-            LOGGER.debug("Get bookLoanList : {}", bookLoanBeanList.size());
+            LOGGER.info("Get bookLoanList : {}", bookLoanBeanList.size());
 
             // Conserve uniquement les emprunts dont l'échéance est la veille
-            bookLoanBeanList.stream().filter(b -> b.getEndLoan().equals(DateTools.yesterday())).collect(Collectors.toList());
-            LOGGER.debug("Filter bookLoanList : {}", bookLoanBeanList.size());
+            List<BookLoanBean> yesterdayBookLoanList = bookLoanBeanList.stream()
+                    .filter(b -> b.getEndLoan().after(DateTools.yesterdayTheDayBefore()) && b.getEndLoan().before(new Date()))
+                    .filter(b -> b.getLoanStatus().equalsIgnoreCase("En cours"))
+                    .collect(Collectors.toList());
 
-            for (BookLoanBean bookLoan : bookLoanBeanList) {
+            LOGGER.info("Filter bookLoanList : {}", yesterdayBookLoanList.size());
+
+            for (BookLoanBean bookLoan : yesterdayBookLoanList) {
                 result.add(new BookLoanEmailReminder(
                         bookLoan.getUser().getId(),
                         bookLoan.getUser().getEmail(),
@@ -70,6 +75,11 @@ public class BookLoanEmailReminderServiceImpl implements BookLoanEmailReminderSe
     @Override
     public List<BookLoanEmailReminder> findBookLoanEmailRemindersByIsEmailSentIsNot(Boolean isEmailSent) {
         return bookLoanEmailReminderRepository.findBookLoanEmailRemindersByIsEmailSentIsNot(isEmailSent);
+    }
+
+    @Override
+    public void saveBookLoanEmailReminder(BookLoanEmailReminder bookLoanEmailReminder) {
+        bookLoanEmailReminderRepository.save(bookLoanEmailReminder);
     }
 
 }
