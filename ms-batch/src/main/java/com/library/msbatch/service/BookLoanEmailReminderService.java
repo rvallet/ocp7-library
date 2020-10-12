@@ -15,4 +15,6 @@ public interface BookLoanEmailReminderService {
 
     List<BookLoanEmailReminder> findBookLoanEmailRemindersByIsEmailSentIsNot(Boolean isEmailSent);
 
+    void saveBookLoanEmailReminder(BookLoanEmailReminder bookLoanEmailReminder);
+
 }

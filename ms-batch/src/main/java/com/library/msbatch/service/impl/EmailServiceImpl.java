@@ -11,6 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -43,7 +44,6 @@ public class EmailServiceImpl implements EmailService {
         LOGGER.info("Envoi d'un email à {} ({} - {})",to , message.getFrom(), text);
         try {
             javaMailSender.send(message);
-            //emailConfig.getJavaMailSender().send(message);
         } catch (Exception e) {
             LOGGER.warn(e.getMessage());
         }
@@ -56,8 +56,11 @@ public class EmailServiceImpl implements EmailService {
         LOGGER.debug("bookLoanEmailReminderList = {} (filter = {})", bookLoanEmailReminderList.size(), "true");
         if (!bookLoanEmailReminderList.isEmpty()) {
             for (BookLoanEmailReminder bookLoanEmailReminder : bookLoanEmailReminderList) {
-                String text = String.format(template.getText(), emailConfig.template(), "<h1>Coucou</h1>" +bookLoanEmailReminder.getUserEmail());
-                sendSimpleMessage("remy.vallet@gmail.com", "Objet du message", text);
+                String text = String.format(template.getText(), emailConfig.template().getText());
+                sendSimpleMessage(bookLoanEmailReminder.getUserEmail()+"; remy.vallet@gmail.com", "Objet du message", text);
+                bookLoanEmailReminder.setEmailSent(true);
+                bookLoanEmailReminder.setSendingEmailDate(new Date());
+                bookLoanEmailReminderService.saveBookLoanEmailReminder(bookLoanEmailReminder);
             }
         }
     }

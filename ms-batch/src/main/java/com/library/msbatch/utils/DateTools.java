@@ -10,4 +10,10 @@ public class DateTools {
         cal.add(Calendar.DATE, -1);
         return cal.getTime();
     }
+
+    public static Date yesterdayTheDayBefore(){
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -2);
+        return cal.getTime();
+    }
 }

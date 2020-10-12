@@ -35,6 +35,7 @@ public class BookLoanEmailReminder implements Serializable {
 
     public BookLoanEmailReminder() {
         super();
+        this.isEmailSent = false;
     }
 
     public BookLoanEmailReminder(Long userId, String userEmail, String lastname, String firstname, Long bookId, String bookTitle, Long bookLoanId, Date endLoan) {
@@ -46,6 +47,7 @@ public class BookLoanEmailReminder implements Serializable {
         this.bookTitle = bookTitle;
         this.bookLoanId = bookLoanId;
         this.endLoan = endLoan;
+        this.isEmailSent = false;
     }
 
     public Long getId() {
@@ -118,5 +120,21 @@ public class BookLoanEmailReminder implements Serializable {
 
     public void setEndLoan(Date endLoan) {
         this.endLoan = endLoan;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 }
