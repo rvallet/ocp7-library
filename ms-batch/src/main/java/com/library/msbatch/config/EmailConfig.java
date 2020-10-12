@@ -47,7 +47,9 @@ public class EmailConfig {
         message.setText(
                 "Bonjour :" +
                         "\n%s" +
-                        "\n%s");
+                        "\n%s" +
+                        "\n%s" +
+                        "\n%s" );
         return message;
     }
 
