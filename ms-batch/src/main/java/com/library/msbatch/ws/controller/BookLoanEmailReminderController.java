@@ -2,7 +2,6 @@ package com.library.msbatch.ws.controller;
 
 import com.library.msbatch.api.ApiRegistration;
 import com.library.msbatch.job.BookLoanEmailReminderJob;
-import com.library.msbatch.proxies.MicroServiceLibraryProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

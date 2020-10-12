@@ -5,7 +5,9 @@ import com.library.mslibrary.config.ApplicationPropertiesConfig;
 import com.library.mslibrary.entities.Book;
 import com.library.mslibrary.entities.BookLoan;
 import com.library.mslibrary.entities.User;
+import com.library.mslibrary.enumerated.BookLoanStatusEnum;
 import com.library.mslibrary.service.BookLoanService;
+import com.library.mslibrary.utils.DateTools;
 import com.library.mslibrary.ws.exception.NoSuchResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,9 @@ import java.util.List;
 
 @RestController
 public class BookLoanController {
+
+    @Autowired
+    private ApplicationPropertiesConfig appConfig;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookLoanController.class);
 
@@ -65,10 +70,17 @@ public class BookLoanController {
         return bl;
     }
 
-    @GetMapping(value= ApiRegistration.REST_SAVE_BOOK_LOAN)
+    @PostMapping(value= ApiRegistration.REST_SAVE_BOOK_LOAN)
     public void saveBookLoan(@RequestBody BookLoan bookLoan) {
-        if (bookLoan==null) throw new NoSuchResultException("Demande d'enregistrement utilisateur : ECHEC");
+        if (bookLoan==null) throw new NoSuchResultException("Demande d'enregistrement d'emprunt : ECHEC");
         bookLoanService.saveBookLoan(bookLoan);
+    }
+
+    @PostMapping(value= ApiRegistration.REST_CREATE_BOOK_LOAN)
+    public void createBookLoan(@RequestBody BookLoan bookLoan) {
+        if (bookLoan==null || bookLoan.getBook()==null || bookLoan.getUser()==null) throw new NoSuchResultException("Demande d'enregistrement d'emprunt : ECHEC");
+        BookLoan bookLoanToCreate = new BookLoan(bookLoan.getUser(), bookLoan.getBook(), appConfig.getBookLoanDuration());
+        bookLoanService.saveBookLoan(bookLoanToCreate);
     }
 
 }

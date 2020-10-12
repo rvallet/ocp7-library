@@ -16,6 +16,8 @@ public interface ApiRegistration {
 
     String REST_SAVE_BOOK_LOAN = "/saveBookLoan";
 
+    String REST_CREATE_BOOK_LOAN = "/createBookLoan";
+
     String REST_BOOKS_LIST = "/booksList";
 
     String REST_BOOK_BY_ID = "/findBookById";

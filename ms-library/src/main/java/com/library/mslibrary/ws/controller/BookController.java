@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BookController {
@@ -52,10 +53,14 @@ public class BookController {
     @GetMapping(value= ApiRegistration.REST_BOOK_BY_ISBN + "/{isbn}")
     public Book getBookByIsbn(@PathVariable String isbn) throws NoSuchResultException {
         LOGGER.debug("getting Book from BookService");
-        Book book = bookService.findBookByIsbn(isbn);
-        LOGGER.info("Envoi du livre id {} (isbn : {})", book.getId(), isbn);
-        if (book == null) throw new NoSuchResultException("Aucun Livre");
-        return book;
+        Optional<Book> book = Optional.ofNullable(bookService.findBookByIsbn(isbn));
+
+        if (book.isPresent()) {
+            LOGGER.info("Envoi du livre id {} (isbn : {})", book.get().getId(), isbn);
+            return book.get();
+        } else {
+            return null;
+        }
     }
 
 }

@@ -22,6 +22,8 @@ public class BookLoanEmailReminderJob {
     @Autowired
     BookLoanEmailReminderService bookLoanEmailReminderService;
 
+    // Testing every 30s with (cron="0/30 * * * * ?")
+    // Manual launch with wget "http://localhost:9095/launchBookLoanEmailReminder"
     @Scheduled(cron="0 0 8 * * ?")
     public void doJob(){
     long t1 = System.currentTimeMillis();
@@ -33,6 +35,8 @@ public class BookLoanEmailReminderJob {
     LOGGER.info("End Job ({} ms)", t2-t1);
     }
 
+    // Testing every min with (cron="0 0/1 * * * ?")
+    // Manual launch with wget "http://localhost:9095/feedBookLoanEmailReminderRepository"
     @Scheduled(cron="0 0 3 * * ?")
     public void feedBookLoanEmailReminderRepository(){
         long t1 = System.currentTimeMillis();

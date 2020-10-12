@@ -9,7 +9,7 @@ public class MailProperties {
 
     private String host;
 
-    private String port;
+    private int port;
 
     private String username;
 
@@ -23,11 +23,11 @@ public class MailProperties {
         this.host = host;
     }
 
-    public String getPort() {
+    public int getPort() {
         return port;
     }
 
-    public void setPort(String port) {
+    public void setPort(int port) {
         this.port = port;
     }
 
