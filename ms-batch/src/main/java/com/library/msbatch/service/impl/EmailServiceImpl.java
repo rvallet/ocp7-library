@@ -1,10 +1,13 @@
 package com.library.msbatch.service.impl;
 
+import com.library.msbatch.config.ApplicationPropertiesConfig;
 import com.library.msbatch.config.EmailConfig;
+import com.library.msbatch.config.MailProperties;
 import com.library.msbatch.entities.BookLoanEmailReminder;
 import com.library.msbatch.service.BookLoanEmailReminderService;
 import com.library.msbatch.service.EmailService;
 import com.library.msbatch.utils.DateTools;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +30,10 @@ public class EmailServiceImpl implements EmailService {
     private EmailConfig emailConfig;
 
     @Autowired
-    public SimpleMailMessage template;
+    MailProperties mailProperties;
+
+    @Autowired
+    ApplicationPropertiesConfig applicationPropertiesConfig;
 
     @Autowired
     private BookLoanEmailReminderService bookLoanEmailReminderService;
@@ -36,19 +42,18 @@ public class EmailServiceImpl implements EmailService {
     public void sendSimpleMessage(String to, String subject, String text) {
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("OCP7.msbatch@gmail.com");
+        message.setFrom(mailProperties.getUsername());
         message.setReplyTo("noreply@gmail.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
 
-        LOGGER.info("Envoi d'un email à {} ({} - {})",to , message.getFrom(), text);
+        LOGGER.info("{} --> Envoi d'un email à {} :\n{}",message.getFrom(), to , text);
         try {
             javaMailSender.send(message);
         } catch (Exception e) {
             LOGGER.warn(e.getMessage());
         }
-
     }
 
     @Override
@@ -58,13 +63,14 @@ public class EmailServiceImpl implements EmailService {
         if (!bookLoanEmailReminderList.isEmpty()) {
             for (BookLoanEmailReminder bookLoanEmailReminder : bookLoanEmailReminderList) {
                 String text = String.format(
-/*                        template.getText(),*/
                         emailConfig.template().getText(),
-                        bookLoanEmailReminder.getBookTitle(),
-                        bookLoanEmailReminder.getFirstname(),
                         bookLoanEmailReminder.getLastname(),
+                        bookLoanEmailReminder.getFirstname(),
+                        bookLoanEmailReminder.getBookTitle(),
                         DateTools.dateToStringPatternForEmail(bookLoanEmailReminder.getEndLoan()));
-                sendSimpleMessage(bookLoanEmailReminder.getUserEmail(), "Objet du message", text);
+
+                sendSimpleMessage(bookLoanEmailReminder.getUserEmail(), applicationPropertiesConfig.getObject()+" '"+ bookLoanEmailReminder.getBookTitle()+"'", text);
+
                 bookLoanEmailReminder.setEmailSent(true);
                 bookLoanEmailReminder.setSendingEmailDate(new Date());
                 bookLoanEmailReminderService.saveBookLoanEmailReminder(bookLoanEmailReminder);

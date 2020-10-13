@@ -2,6 +2,7 @@ package com.library.msbatch;
 
 import com.library.msbatch.config.ApplicationPropertiesConfig;
 import com.library.msbatch.config.MailProperties;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.mail.SimpleMailMessage;
 
 @SpringBootApplication(scanBasePackages="com.library")
 @EnableConfigurationProperties
@@ -27,26 +27,13 @@ public class MsBatchApplication implements CommandLineRunner {
 	@Autowired
 	MailProperties mailProperties;
 
-	@Autowired
-	SimpleMailMessage simpleMailMessage;
-
-/*	@Autowired
-	EmailConfig emailConfig;
-
-	@Autowired
-	EmailService emailService;*/
-
 	public static void main(String[] args) {
 		SpringApplication.run(MsBatchApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		LOGGER.info("\nAppProperties => {}", applicationPropertiesConfig.getExemple());
-		LOGGER.info("\nMailProperties => \nHost : {} \nPort : {} \nUserName: {} \nPassword : {}",mailProperties.getHost(), mailProperties.getPort(), mailProperties.getUsername(), mailProperties.getPassword());
-
-/*		String text = String.format(simpleMailMessage.getText(), emailConfig.template(), "<h1>Coucou</h1>");
-		emailService.sendSimpleMessage("remy.vallet@gmail.com", "subject", text);*/
-
+		LOGGER.info("\nMailTemplate =>\nObject: {}\nContent:\n{}", applicationPropertiesConfig.getObject(), StringEscapeUtils.escapeHtml4(applicationPropertiesConfig.getTemplate()));
+		LOGGER.info("\nMailProperties =>\nHost : {} \nPort : {} \nUserName: {} \nPassword : {}",mailProperties.getHost(), mailProperties.getPort(), mailProperties.getUsername(), mailProperties.getPassword());
 	}
 }
