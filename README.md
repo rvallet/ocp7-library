@@ -49,6 +49,9 @@ Vous êtes missionné pour la réalisation des premiers produits !
 ## Installation
 ~ En cours de rédaction ~
 
+## Déploiement
+~ En cours de rédaction ~
+
 ## Réalisé avec
 
 * [IntelliJ IDEA](https://www.jetbrains.com/idea/) - IDE (JDK11)

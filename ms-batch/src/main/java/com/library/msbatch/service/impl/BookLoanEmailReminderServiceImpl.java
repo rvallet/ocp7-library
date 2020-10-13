@@ -46,7 +46,7 @@ public class BookLoanEmailReminderServiceImpl implements BookLoanEmailReminderSe
             // Conserve uniquement les emprunts dont l'échéance est la veille
             List<BookLoanBean> yesterdayBookLoanList = bookLoanBeanList.stream()
                     .filter(b -> b.getEndLoan().after(DateTools.yesterdayTheDayBefore()) && b.getEndLoan().before(new Date()))
-                    .filter(b -> b.getLoanStatus().equalsIgnoreCase("En cours"))
+                    .filter(b -> !b.getLoanStatus().equalsIgnoreCase("Terminé"))
                     .collect(Collectors.toList());
 
             LOGGER.info("Filter bookLoanList : {}", yesterdayBookLoanList.size());
