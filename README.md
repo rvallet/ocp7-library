@@ -46,11 +46,35 @@ Vous êtes missionné pour la réalisation des premiers produits !
 * Les scripts SQL de création de la base de données avec un jeu de données de démonstration.
 * Une documentation succincte expliquant comment déployer l'application.
 
-## Installation
-~ En cours de rédaction ~
+## Installation & Déploiement
 
-## Déploiement
-~ En cours de rédaction ~
+### Installation
+
+- Cloner les dépôts https://github.com/rvallet/ocp7-library & https://github.com/rvallet/library-config
+- Paramétrer une base de donnée MySQL en local dans les fichiers properties de library-config (port local, username, password)
+spring.datasource.url=jdbc:mysql://localhost:3306/library_bdd?useSSL=false&autoReconnect=true&verifyServerCertificate=false&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=admin
+- Lancer un serveur local de connexion à la BDD MySQL (ex: WampServer)
+- Importer le projet complet ocp7-library dans votre IDE Java (nécéssite la présence d'un module Sprint Boot, présente par défault dans IntelliJ ou Eclipse Sprint Tools Suite 4 "STS4")
+- Lancer cloud-config (port 8888)
+- Lancer eureka-server (port 9102) 
+- Lancer les microservices ms-batch (port 9095) et ms-library (plusieurs instances possible, ex : port 9090 & 9092 avec 'VM options = -Dserver.port=9090')
+- Au premier démarrage les microservice vont créer les table de la BDD 'library_bdd' ainsi qu'un jeu de données de tests sur la table utilisateur (supprimer les tables pour regénérer le jeu de données)
+- Lancer le website MyLibrary
+ 
+ * Notes
+ - ms-batch
+        . Alimentation de la BDD avec les emprunts non-rendus arrivé à date d'échéance (chaque jour à 3:00AM)
+        lancement manuel possible => http://localhost:9095/feedBookLoanEmailReminderRepository
+        . Envoie des relances d'emprunts arrivés à échéance (chaque jour à 8:00AM)
+        lancement manuel possible => http://localhost:9095/launchBookLoanEmailReminder
+  
+### Déploiement
+
+- Générer les wars des modules avec "mvn package"
+- Récupérer les war créés dans le repertoire 'target' les copier dans le dossier 'webapps' de votre Server Apache Tomcat
+- Démarrer le serveur
 
 ## Réalisé avec
 
