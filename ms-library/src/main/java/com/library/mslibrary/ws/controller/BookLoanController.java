@@ -92,6 +92,7 @@ public class BookLoanController {
         if (bookToUpdate.getStock() <1){
             bookToUpdate.setLoanAvailable(false);
         }
+        LOGGER.info("Création d'un emprunt (Ouvrage : {} - Usager : {}", bookLoanToCreate.getBook().getTitle(), bookLoanToCreate.getUser().getEmail());
         bookService.saveBook(bookToUpdate);
         bookLoanService.saveBookLoan(bookLoanToCreate);
     }
