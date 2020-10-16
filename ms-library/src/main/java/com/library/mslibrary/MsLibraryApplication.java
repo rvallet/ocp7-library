@@ -4,7 +4,6 @@ import com.library.mslibrary.config.ApplicationPropertiesConfig;
 import com.library.mslibrary.entities.Book;
 import com.library.mslibrary.entities.BookLoan;
 import com.library.mslibrary.entities.User;
-import com.library.mslibrary.repository.UserRepository;
 import com.library.mslibrary.security.WebSecurityConfig;
 import com.library.mslibrary.service.BookLoanService;
 import com.library.mslibrary.service.BookService;
@@ -100,14 +99,20 @@ public class MsLibraryApplication implements CommandLineRunner {
 		if (isBddInit) {
 
 			/* Initializing BDD with sample test books and loans */
-
+			String loremIpsum = "Vi simulationem difficillimum aliis et placuerat placuerat simulationem ponderibus " +
+					"simulationem tamquam placuerat nimis obstaculo nimis confidentia auxilio commentis qua nimis." +
+					"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed velit eget leo pharetra" +
+					" pretium. Duis imperdiet a turpis vitae mattis. Praesent molestie at turpis sit amet lacinia." +
+					" Cras sed dui at massa ultricies fringilla quis sit amet lectus.</p>" +
+					"<p>Donec quis ultrices risus. Phasellus lobortis nec dolor vel porttitor. Nam eu mauris tortor." +
+					" Integer pretium vel dui et luctus. Integer sed odio vestibulum mi pellentesque aliquam." +
+					" Donec lacinia cursus arcu sed lobortis. Mauris efficitur tellus in nulla posuere viverra.</p>";
 			if (CollectionUtils.isEmpty(bookService.findAll())) {
 				LOGGER.info("Création d'un jeu de données de livres en BDD");
 				List<Book> bookList = Arrays.asList(
 						new Book(
-								"title1",
-								"description1",
-								"shortDescription1",
+								"titre1 Lorem ipsum",
+								"desc1 "+loremIpsum,
 								"author1",
 								"editor1",
 								"collection1",
@@ -115,9 +120,8 @@ public class MsLibraryApplication implements CommandLineRunner {
 								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						),
 						new Book(
-								"title2",
-								"description2",
-								"shortDescription2",
+								"titre2 Lorem ipsum",
+								"desc2 "+loremIpsum,
 								"author2",
 								"editor2",
 								"collection2",
@@ -125,9 +129,8 @@ public class MsLibraryApplication implements CommandLineRunner {
 								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						),
 						new Book(
-								"title3",
-								"description3",
-								"shortDescription3",
+								"titre3 Lorem ipsum",
+								"desc3 "+loremIpsum,
 								"author3",
 								"editor3",
 								"collection3",
@@ -135,9 +138,8 @@ public class MsLibraryApplication implements CommandLineRunner {
 								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						),
 						new Book(
-								"title4",
-								"description4",
-								"shortDescription4",
+								"titre4 Lorem ipsum",
+								"desc4 "+loremIpsum,
 								"author4",
 								"editor4",
 								"collection4",
@@ -145,19 +147,17 @@ public class MsLibraryApplication implements CommandLineRunner {
 								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						),
 						new Book(
-								"title5",
-								"description5",
-								"shortDescription5",
-								"author5",
+								"titre5 Lorem ipsum",
+								"desc5 "+loremIpsum,
+								"titre5 Lorem ipsum",
 								"editor5",
 								"collection5",
 								"isbn5",
 								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						),
 						new Book(
-								"title6",
-								"description6",
-								"shortDescription6",
+								"titre6 Lorem ipsum",
+								"desc6 "+loremIpsum,
 								"author6",
 								"editor6",
 								"collection6",
@@ -165,9 +165,8 @@ public class MsLibraryApplication implements CommandLineRunner {
 								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						),
 						new Book(
-								"title7",
-								"description7",
-								"shortDescription7",
+								"titre7 Lorem ipsum",
+								"desc7 "+loremIpsum,
 								"author7",
 								"editor7",
 								"collection7",
@@ -175,9 +174,8 @@ public class MsLibraryApplication implements CommandLineRunner {
 								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						),
 						new Book(
-								"title8",
-								"description8",
-								"shortDescription8",
+								"titre8 Lorem ipsum",
+								"desc8 "+loremIpsum,
 								"author8",
 								"editor8",
 								"collection8",
@@ -185,9 +183,8 @@ public class MsLibraryApplication implements CommandLineRunner {
 								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						),
 						new Book(
-								"title9",
-								"description9",
-								"shortDescription9",
+								"titre9 Lorem ipsum",
+								"desc9 "+loremIpsum,
 								"author9",
 								"editor9",
 								"collection9",
@@ -195,9 +192,8 @@ public class MsLibraryApplication implements CommandLineRunner {
 								DateTools.addDays(new Date(), - RandomTools.randomNum(100,999))
 						),
 						new Book(
-								"title10",
-								"description10",
-								"shortDescription10",
+								"titre10 Lorem ipsum",
+								"desc10 "+loremIpsum,
 								"author10",
 								"editor10",
 								"collection10",
@@ -206,11 +202,20 @@ public class MsLibraryApplication implements CommandLineRunner {
 						)
 				);
 
+				int i=1;
 				for (Book book : bookList) {
-					book.setLoanAvailable(true);
+					if (i>10) {i=RandomTools.randomNum(1,10);}
 					book.setOnline(true);
 					book.setStock(RandomTools.randomNum(0,5));
+					if ((book.getStock() < 1)) {
+						book.setLoanAvailable(false);
+					} else {
+						book.setLoanAvailable(true);
+					}
+					book.setImgPathThAttribute("/img/book/book"+i+"_cover_400x400.jpg");
+					i+=1;
 				}
+
 				bookService.saveAll(bookList);
 				LOGGER.info("Ajout de {} Livres", bookList.size());
 			}

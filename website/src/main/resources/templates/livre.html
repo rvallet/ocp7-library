@@ -22,20 +22,27 @@
                     <H2><span th:text="${book.title}">Titre</span></H2>
                     <hr />
                     <small th:if="${book.author}" class="text-muted" th:text="${'Auteur : '+book.author}">Auteur</small>
-                    <small class="text-muted" th:text="${'('+#dates.format(book.releaseDate, 'dd/MM/yyyy')+' - Autheur : '+book.author+')'}">Parution</small>
+                    <small class="text-muted" th:text="${'(Parution : '+#dates.format(book.releaseDate, 'dd/MM/yyyy')+')'}">Parution</small>
                     <br />
+<!--                <div class="logo" th:if="${book.isPromoted}">
+                       <img class="img-fluid" width="40" height="40" th:src="@{/img/promote/promote-MyLibrary_150x150.png}" alt="Promotion MyLibrary">
+                     </div>-->
                     <br />
-                    <p th:text="${book.description}">Description </p>
-                    <br />
-<!--                    <div class="logo" th:if="${book.isPromoted}">
-                        <img class="img-fluid" width="40" height="40" th:src="@{/img/promote/promote-MyLibrary_150x150.png}" alt="Promotion MyLibrary">
-                    </div>-->
-                    <img th:if="${book.imgPathThAttribute == null}" class="center-block img-fluid" th:src="@{/img/book/default_book_900x400.jpg}" th:alt="${book.title}">
-                    <img th:if="${book.imgPathThAttribute != null}" class="center-block img-fluid" th:src="@{${book.imgPathThAttribute}}" th:alt="${book.title}">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <img th:if="${book.imgPathThAttribute == null}" class="center-block img-fluid" th:src="@{/img/book/default_book_900x400.jpg}" th:alt="${book.title}">
+                            <img th:if="${book.imgPathThAttribute != null}" class="center-block img-fluid" th:src="@{${book.imgPathThAttribute}}" th:alt="${book.title}">
+                            <br />
+                        </div>
+                        <div class="col-md-6">
+                            <br />
+                            <p th:utext="${book.description}">Description </p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Onglet(s) détail du livre -->
-                <br /><br />
+                <br />
                 <nav>
                     <div class="nav nav-tabs anchor" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-detail-tab"

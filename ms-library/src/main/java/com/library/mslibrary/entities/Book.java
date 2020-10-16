@@ -4,6 +4,7 @@ package com.library.mslibrary.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,6 +21,7 @@ public class Book implements Serializable {
 
     private String title;
 
+    @Size(min = 1, max = 1000)
     private String description;
 
     private String shortDescription;
@@ -52,10 +54,10 @@ public class Book implements Serializable {
         this.isLoanAvailable = false;
     }
 
-    public Book(String title, String description, String shortDescription, String author, String editor, String collection, String isbn, Date releaseDate) {
+    public Book(String title, String description, String author, String editor, String collection, String isbn, Date releaseDate) {
         this.title = title;
         this.description = description;
-        this.shortDescription = shortDescription;
+        this.setShortDescription(description);
         this.author = author;
         this.editor = editor;
         this.collection = collection;
@@ -94,7 +96,7 @@ public class Book implements Serializable {
     }
 
     public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+        this.shortDescription = shortDescription.length() > 75 ? shortDescription.substring(0, 72)+"...": shortDescription;
     }
 
     public String getAuthor() {
