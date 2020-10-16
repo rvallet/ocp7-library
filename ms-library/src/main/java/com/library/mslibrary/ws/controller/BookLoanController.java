@@ -86,7 +86,7 @@ public class BookLoanController {
 
         BookLoan bookLoanToCreate = new BookLoan(bookLoan.getUser(), bookLoan.getBook(), appConfig.getBookLoanDuration());
 
-        Book bookToUpdate = bookService.findBookByIsbn(bookLoanToCreate.getBook().getIsbn());
+        Book bookToUpdate = bookLoanToCreate.getBook();
 
         bookToUpdate.setStock(bookToUpdate.getStock()-1);
         if (bookToUpdate.getStock() <1){
