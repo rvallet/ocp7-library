@@ -149,7 +149,7 @@ public class MsLibraryApplication implements CommandLineRunner {
 						new Book(
 								"titre5 Lorem ipsum",
 								"desc5 "+loremIpsum,
-								"titre5 Lorem ipsum",
+								"author5",
 								"editor5",
 								"collection5",
 								"isbn5",
