@@ -20,6 +20,9 @@ public class EmailConfig {
     @Autowired
     MailProperties mailProperties;
 
+    @Autowired
+    ApplicationPropertiesConfig applicationPropertiesConfig;
+
     @Bean
     public JavaMailSender getMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -27,7 +30,7 @@ public class EmailConfig {
         mailSender.setHost(mailProperties.getHost());
         mailSender.setPort(mailProperties.getPort());
         mailSender.setUsername(mailProperties.getUsername());
-        mailSender.setPassword(mailProperties.getPassword()); // PW_Compte = msbatch.OCP7
+        mailSender.setPassword(mailProperties.getPassword());
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.starttls.enable", "true");
@@ -42,14 +45,10 @@ public class EmailConfig {
     @Bean
     public SimpleMailMessage template() {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("OCP7.msbatch@gmail.com");
-        message.setFrom("OCP7.msbatch@gmail.com");
         message.setText(
-                "Bonjour :" +
-                        "\n%s" +
-                        "\n%s" +
-                        "\n%s" +
-                        "\n%s" );
+         applicationPropertiesConfig.getTemplate()
+        );
+
         return message;
     }
 
