@@ -62,6 +62,7 @@ public class BookLoanServiceImpl implements BookLoanService {
         BookLoan bl = bookLoanRepository.findBookLoanById(bookLoanId);
         bl.setReturnLoan(new Date());
         bl.getBook().setStock(bl.getBook().getStock() +1);
+        bl.getBook().setLoanAvailable(true);
         bl.setLoanStatus(BookLoanStatusEnum.CLOSED.toString());
         LOGGER.info("Clôture de l'emprunt id {} (Status {} - Date de retour : {})", bookLoanId, bl.getLoanStatus(), bl.getReturnLoan());
         return bookLoanRepository.save(bl);

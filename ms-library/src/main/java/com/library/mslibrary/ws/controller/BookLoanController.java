@@ -80,6 +80,9 @@ public class BookLoanController {
     public void createBookLoan(@RequestBody BookLoan bookLoan) {
         if (bookLoan==null || bookLoan.getBook()==null || bookLoan.getUser()==null) throw new NoSuchResultException("Demande d'enregistrement d'emprunt : ECHEC");
         BookLoan bookLoanToCreate = new BookLoan(bookLoan.getUser(), bookLoan.getBook(), appConfig.getBookLoanDuration());
+        int stock = bookLoanToCreate.getBook().getStock();
+        bookLoanToCreate.getBook().setStock(stock-1);
+        if (stock <1){bookLoanToCreate.getBook().setLoanAvailable(false);}
         bookLoanService.saveBookLoan(bookLoanToCreate);
     }
 
