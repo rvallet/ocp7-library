@@ -7,6 +7,7 @@ import com.library.mslibrary.entities.BookLoan;
 import com.library.mslibrary.entities.User;
 import com.library.mslibrary.enumerated.BookLoanStatusEnum;
 import com.library.mslibrary.service.BookLoanService;
+import com.library.mslibrary.service.BookService;
 import com.library.mslibrary.utils.DateTools;
 import com.library.mslibrary.ws.exception.NoSuchResultException;
 import org.slf4j.Logger;
@@ -26,6 +27,9 @@ public class BookLoanController {
 
     @Autowired
     BookLoanService bookLoanService;
+
+    @Autowired
+    BookService bookService;
 
     @Autowired
     private ApplicationPropertiesConfig applicationPropertiesConfig;
@@ -79,12 +83,17 @@ public class BookLoanController {
     @PostMapping(value= ApiRegistration.REST_CREATE_BOOK_LOAN)
     public void createBookLoan(@RequestBody BookLoan bookLoan) {
         if (bookLoan==null || bookLoan.getBook()==null || bookLoan.getUser()==null) throw new NoSuchResultException("Demande d'enregistrement d'emprunt : ECHEC");
+
         BookLoan bookLoanToCreate = new BookLoan(bookLoan.getUser(), bookLoan.getBook(), appConfig.getBookLoanDuration());
-        int stock = bookLoanToCreate.getBook().getStock();
-        bookLoanToCreate.getBook().setStock(stock-1);
-        if (stock <1){bookLoanToCreate.getBook().setLoanAvailable(false);}
+
+        Book bookToUpdate = bookService.findBookByIsbn(bookLoanToCreate.getBook().getIsbn());
+
+        bookToUpdate.setStock(bookToUpdate.getStock()-1);
+        if (bookToUpdate.getStock() <1){
+            bookToUpdate.setLoanAvailable(false);
+        }
+        bookService.saveBook(bookToUpdate);
         bookLoanService.saveBookLoan(bookLoanToCreate);
     }
-
 }
 
