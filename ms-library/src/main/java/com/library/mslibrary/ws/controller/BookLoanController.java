@@ -86,12 +86,13 @@ public class BookLoanController {
 
         BookLoan bookLoanToCreate = new BookLoan(bookLoan.getUser(), bookLoan.getBook(), appConfig.getBookLoanDuration());
 
-        Book bookToUpdate = bookService.findBookByIsbn(bookLoanToCreate.getBook().getIsbn());
+        Book bookToUpdate = bookLoanToCreate.getBook();
 
         bookToUpdate.setStock(bookToUpdate.getStock()-1);
         if (bookToUpdate.getStock() <1){
             bookToUpdate.setLoanAvailable(false);
         }
+        LOGGER.info("Création d'un emprunt (Ouvrage : {} - Usager : {}", bookLoanToCreate.getBook().getTitle(), bookLoanToCreate.getUser().getEmail());
         bookService.saveBook(bookToUpdate);
         bookLoanService.saveBookLoan(bookLoanToCreate);
     }
